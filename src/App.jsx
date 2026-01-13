@@ -3,6 +3,7 @@ import Logo from './assets/logo.png'
 import './App.css'
 import { Routes, Route, useMatch } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar';
+import HeroVideo from './Components/HeroVideo/HeroVideo';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,6 +12,7 @@ function App() {
     <>
       <div>
         <Navbar/>
+        <HeroVideo/>
         <Routes>
 
         </Routes>
