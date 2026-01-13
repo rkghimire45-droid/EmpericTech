@@ -4,6 +4,8 @@ import './App.css'
 import { Routes, Route, useMatch } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar';
 import HeroVideo from './Components/HeroVideo/HeroVideo';
+import Footer from './Components/Footer/Footer';
+import Contact from './Components/Contact Us/Contact';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +15,8 @@ function App() {
       <div>
         <Navbar/>
         <HeroVideo/>
+        <Contact/>
+        <Footer/>
         <Routes>
 
         </Routes>
