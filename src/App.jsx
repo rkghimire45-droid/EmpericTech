@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar/Navbar';
 import HeroVideo from './Components/HeroVideo/HeroVideo';
 import Footer from './Components/Footer/Footer';
 import Contact from './Components/Contact Us/Contact';
+import Blog from './Components/Blogs/Blogs';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App() {
       <div>
         <Navbar/>
         <HeroVideo/>
+        <Blog/>
         <Contact/>
         <Footer/>
         <Routes>
