@@ -1,9 +1,11 @@
 import ServiceLayout from "./ServiceLayout";
+import WebDevImage from "../../assets/WebDev.png";
 
 const WebDevelopment = () => {
   return (
     <ServiceLayout
       title="Web Development"
+      heroImage={WebDevImage}
       description="At EmpericTech, we specialize in building cutting-edge, responsive websites that are visually stunning, secure, and performance-driven. Our expert developers transform ideas into scalable digital solutions that help businesses grow online."
     >
       <h3 className="text-2xl font-semibold mb-6">Our Services Include</h3>

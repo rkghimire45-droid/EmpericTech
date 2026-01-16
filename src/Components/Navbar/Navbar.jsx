@@ -72,6 +72,8 @@ const Navbar = () => {
                   <li><Link to="/services/ui-ux-design" className="hover:text-purple-600">UI / UX Design</Link></li>
                   <li><Link to="/services/cyber-security" className="hover:text-purple-600">Cybersecurity</Link></li>
                   <li><Link to="/services/data-solutions" className="hover:text-purple-600">Data Solutions</Link></li>
+                  <li><Link to="/services/graphics-design" className="hover:text-purple-600">Graphics & Design</Link></li>
+
                 </ul>
               </div>
 
