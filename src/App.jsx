@@ -1,32 +1,40 @@
-import { useState } from 'react'
-import Logo from './assets/logo.png'
-import './App.css'
-import { Routes, Route, useMatch } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar';
 import HeroVideo from './Components/HeroVideo/HeroVideo';
 import Footer from './Components/Footer/Footer';
 import Contact from './Components/Contact Us/Contact';
 import Blog from './Components/Blogs/Blogs';
+import './index.css'
+import WebDevelopment from "./pages/services/WebDevelopment";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <Navbar/>
-        <HeroVideo/>
-        <Blog/>
-        <Contact/>
-        <Footer/>
-        <Routes>
+      <Navbar />
 
-        </Routes>
-        
-      </div>
-      
+      <Routes>
+        {/* Home Page */}
+        <Route
+          path="/"
+          element={
+            <>
+              <HeroVideo />
+              <Blog />
+              <Contact />
+            </>
+          }
+        />
+
+        {/* Services */}
+        <Route
+          path="/services/web-development"
+          element={<WebDevelopment />}
+        />
+      </Routes>
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
