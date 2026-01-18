@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useRef } from "react";
 import Navbar from './Components/Navbar/Navbar';
 import HeroVideo from './Components/HeroVideo/HeroVideo';
 import Footer from './Components/Footer/Footer';
@@ -15,10 +16,13 @@ import DataSolutions from "./pages/services/DataSolutions";
 import ITBusinessOutsourcing from "./pages/services/ITBusinessOutsourcing";
 import GraphicsAndDesign from "./pages/services/GraphicsDesign";
 
+
 function App() {
+  const contactRef = useRef(null);
+
   return (
     <>
-      <Navbar />
+      <Navbar contactRef={contactRef} />
 
       <Routes>
         {/* Home Page */}
@@ -28,7 +32,7 @@ function App() {
             <>
               <HeroVideo />
               <Blog />
-              <Contact />
+              <Contact ref={contactRef}/>
             </>
           }
         />
@@ -70,7 +74,6 @@ function App() {
             path="/services/graphics-design"
             element={<GraphicsAndDesign />}
         />
-
         
 
       </Routes>

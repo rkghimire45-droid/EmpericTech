@@ -1,8 +1,31 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
-const Navbar = () => {
+const Navbar = ({contactRef}) => {
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToContact = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        contactRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 300);
+    } else {
+      contactRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+
   const [whatOpen, setWhatOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [globalOpen, setGlobalOpen] = useState(false);
@@ -28,6 +51,8 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  
 
   return (
     <nav className="flex items-center px-16 py-5 bg-white border-b border-gray-200 relative z-50">
@@ -138,8 +163,14 @@ const Navbar = () => {
 
         {/* Contact */}
         <li className="font-medium">
-          <Link to="/contact" className="hover:text-purple-600">Contact Us</Link>
+          <button
+            onClick={scrollToContact}
+            className="hover:text-purple-600"
+          >
+            Contact Us
+          </button>
         </li>
+
 
         {/* Global */}
         <li className="relative" ref={globalRef}>

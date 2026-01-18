@@ -1,10 +1,16 @@
-const Contact = () => {
+import { forwardRef } from "react";
+
+const Contact = forwardRef((props, ref) => {
   return (
-    <div className="min-h-screen flex justify-center px-4 py-16 bg-white">
+    <div
+      ref={ref}
+      className="min-h-screen flex justify-center px-4 py-16 bg-white"
+    >
       <div className="w-full max-w-md text-center">
-        {/* Description */}
         <p className="text-sm md:text-base text-black mb-10 leading-relaxed">
-          Every day, EmpericTech empowers businesses to scale with confidence by optimizing systems, strengthening security, and enabling data-driven decision-making.
+          Every day, EmpericTech empowers businesses to scale with confidence by
+          optimizing systems, strengthening security, and enabling data-driven
+          decision-making.
         </p>
 
         {/* Heading */}
@@ -89,6 +95,6 @@ const Contact = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Contact;
