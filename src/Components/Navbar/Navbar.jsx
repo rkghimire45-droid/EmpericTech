@@ -383,66 +383,117 @@
 // };
 
 // export default Navbar;
-import { useState } from "react";
+
+
+
+
+
+
+import { useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Moon, Sun, ChevronDown, Menu, X, Globe } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import LogoDark from "../../assets/images/logo-dark.png";
+import LogoLight from "../../assets/images/logo-light.png";
+import favicon from "../../assets/images/favicon.png";
+import logo from "../../assets/images/logo.png";
 
 function Navbar({ contactRef }) {
   const { theme, toggleTheme, colors } = useTheme();
+  const isDark = theme === "dark";
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [lockedByClick, setLockedByClick] = useState(false);
+  const [globalOpen, setGlobalOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("Global");
 
-  const isDark = theme === "dark";
+
+
+  const dropdownRef = useRef(null);
+  const aboutRef = useRef(null);
+  const globalRef = useRef(null);
+
+
+
+  /* Close dropdown on outside click */
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdown(null);
+        setLockedByClick(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+
+  useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setOpenDropdown(null);
+      setLockedByClick(false);
+    }
+
+    if (globalRef.current && !globalRef.current.contains(e.target)) {
+      setGlobalOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, []);
+
+  
 
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
         isDark
-          ? "bg-gradient-to-r from-[#050709] to-[#0f0715]"
+          ? "bg-linear-to-r from-[#050709] to-[#0f0715]"
           : "bg-white border-b"
       }`}
-      style={{
-        borderColor: !isDark ? colors.borderColor : "transparent",
-      }}
+      style={{ borderColor: !isDark ? colors.borderColor : "transparent" }}
     >
       <nav className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <Link
-            to="/"
-            className="text-xl font-bold tracking-wide"
-            style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
-          >
-            Emperic<span style={{ color: colors.primaryColor }}>Tech</span>
+          <Link to="/" className="flex items-center">
+            <img
+              src={isDark ? LogoDark : LogoLight}
+              alt="EmpericTech"
+              className="h-10 w-auto transition-all duration-300"
+            />
           </Link>
+
 
           {/* DESKTOP MENU */}
           <div className="hidden lg:flex items-center gap-8">
 
-            {/* What We Do */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("services")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
+            {/* WHAT WE DO */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                className="flex items-center gap-1 font-medium transition-colors"
+                onClick={() =>
+                  setOpenDropdown(openDropdown === "services" ? null : "services")
+                }
+                className="flex items-center gap-2 font-medium"
                 style={{
                   color: isDark ? colors.whiteColor : colors.darkColor,
                 }}
               >
                 What We Do
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform ${
+                <span
+                  className={`transition-transform duration-200 ${
                     openDropdown === "services" ? "rotate-180" : ""
                   }`}
-                />
+                >
+                  ▾
+                </span>
               </button>
 
-              {/* MEGA DROPDOWN */}
               {openDropdown === "services" && (
                 <div
                   className="absolute left-0 mt-6 w-[700px] rounded-xl shadow-xl p-8 grid grid-cols-3 gap-8"
@@ -452,7 +503,7 @@ function Navbar({ contactRef }) {
                       : colors.whiteColor,
                   }}
                 >
-                  {/* Column 1 */}
+                  {/* COLUMN 1 */}
                   <div>
                     <h4
                       className="font-semibold mb-4 border-l-4 pl-3"
@@ -464,14 +515,34 @@ function Navbar({ contactRef }) {
                       Web & IT Services
                     </h4>
                     <ul className="space-y-3 text-sm">
-                      <NavItem to="/services/web-development" label="Web Development" colors={colors} />
-                      <NavItem to="/services/cloud-services" label="Cloud Services" colors={colors} />
-                      <NavItem to="/services/it-support" label="IT Support" colors={colors} />
-                      <NavItem to="/services/digital-marketing" label="Digital Marketing" colors={colors} />
+                      {[
+                        ["Web Development", "/services/web-development"],
+                        ["Cloud Services", "/services/cloud-services"],
+                        ["IT Support", "/services/it-support"],
+                        ["Digital Marketing", "/services/digital-marketing"],
+                      ].map(([label, link]) => (
+                        <li key={label}>
+                          <NavLink
+                            to={link}
+                            className="transition-colors"
+                            style={{
+                              color: isDark ? "#f8f8f8" : colors.grayColor,
+                            }}
+                            onMouseEnter={(e) =>
+                              (e.target.style.color = colors.primaryColor)
+                            }
+                            onMouseLeave={(e) =>
+                              (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
+                            }
+                          >
+                            {label}
+                          </NavLink>
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
-                  {/* Column 2 */}
+                  {/* COLUMN 2 */}
                   <div>
                     <h4
                       className="font-semibold mb-4 border-l-4 pl-3"
@@ -483,14 +554,34 @@ function Navbar({ contactRef }) {
                       Design & Security
                     </h4>
                     <ul className="space-y-3 text-sm">
-                      <NavItem to="/services/ui-ux-design" label="UI / UX Design" colors={colors} />
-                      <NavItem to="/services/cyber-security" label="Cybersecurity" colors={colors} />
-                      <NavItem to="/services/data-solutions" label="Data Solutions" colors={colors} />
-                      <NavItem to="/services/graphics-design" label="Graphics & Design" colors={colors} />
+                      {[
+                        ["UI / UX Design", "/services/ui-ux-design"],
+                        ["Cybersecurity", "/services/cyber-security"],
+                        ["Data Solutions", "/services/data-solutions"],
+                        ["Graphics & Design", "/services/graphics-design"],
+                      ].map(([label, link]) => (
+                        <li key={label}>
+                          <NavLink
+                            to={link}
+                            className="transition-colors"
+                            style={{
+                              color: isDark ? "#f8f8f8" : colors.grayColor,
+                            }}
+                            onMouseEnter={(e) =>
+                              (e.target.style.color = colors.primaryColor)
+                            }
+                            onMouseLeave={(e) =>
+                              (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
+                            }
+                          >
+                            {label}
+                          </NavLink>
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
-                  {/* Column 3 */}
+                  {/* COLUMN 3 */}
                   <div>
                     <h4
                       className="font-semibold mb-4 border-l-4 pl-3"
@@ -502,11 +593,23 @@ function Navbar({ contactRef }) {
                       Business Services
                     </h4>
                     <ul className="space-y-3 text-sm">
-                      <NavItem
-                        to="/services/outsourcing"
-                        label="IT & Business Outsourcing"
-                        colors={colors}
-                      />
+                      <li>
+                        <NavLink
+                          to="/services/outsourcing"
+                          className="transition-colors"
+                          style={{
+                            color: isDark ? "#f8f8f8" : colors.grayColor,
+                          }}
+                          onMouseEnter={(e) =>
+                            (e.target.style.color = colors.primaryColor)
+                          }
+                          onMouseLeave={(e) =>
+                            (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
+                          }
+                        >
+                          IT & Business Outsourcing
+                        </NavLink>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -515,30 +618,34 @@ function Navbar({ contactRef }) {
 
             <NavLinkStyled to="/blogs" label="What We Think" isDark={isDark} colors={colors} />
 
-            {/* About */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("about")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
+            {/* ABOUT */}
+            <div className="relative" ref={aboutRef}>
               <button
-                className="flex items-center gap-1 font-medium transition-colors"
-                style={{
-                  color: isDark ? colors.whiteColor : colors.darkColor,
+                onClick={() => {
+                  if (openDropdown === "about") {
+                    setOpenDropdown(null);
+                    setLockedByClick(false);
+                  } else {
+                    setOpenDropdown("about");
+                    setLockedByClick(true);
+                  }
                 }}
+                className="flex items-center gap-2 font-medium"
+                style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
               >
                 About EmpericTech
-                <ChevronDown
-                  size={16}
+                <span
                   className={`transition-transform ${
                     openDropdown === "about" ? "rotate-180" : ""
                   }`}
-                />
+                >
+                  ▾
+                </span>
               </button>
 
               {openDropdown === "about" && (
                 <div
-                  className="absolute left-0 mt-6 w-56 rounded-xl shadow-lg p-4"
+                  className="absolute left-0 mt-6 w-[620px] p-6 grid grid-cols-3 gap-6 rounded-xl shadow-xl"
                   style={{
                     backgroundColor: isDark
                       ? colors.grayColor3
@@ -546,29 +653,36 @@ function Navbar({ contactRef }) {
                   }}
                 >
                   {[
-                    "About Us",
-                    "Case Studies",
-                    "Leadership",
-                    "News",
-                    "Privacy",
-                    "Wellbeing",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="px-3 py-2 rounded-md text-sm transition-colors cursor-pointer"
+                    ["About Us", "/about"],
+                    ["Case Studies", "/case-studies"],
+                    ["Leadership", "/leadership"],
+                    ["News", "/news"],
+                    ["Privacy", "/privacy"],
+                    ["Wellbeing", "/wellbeing"],
+                  ].map(([label, link]) => (
+                    <NavLink
+                      key={label}
+                      to={link}
+                      className="text-sm font-medium transition-colors"
                       style={{
-                        color: isDark ? colors.whiteColor : colors.darkColor,
+                        color: isDark ? "#ffffff" : colors.darkColor,
                       }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = colors.primaryColor)
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = isDark ? "#ffffff" : colors.darkColor)
+                      }
                     >
-                      {item}
-                    </div>
+                      {label}
+                    </NavLink>
                   ))}
                 </div>
               )}
             </div>
 
+
             <NavLinkStyled to="/careers" label="Careers" isDark={isDark} colors={colors} />
-            <NavLinkStyled to="/blogs" label="Blogs" isDark={isDark} colors={colors} />
 
             <button
               onClick={() =>
@@ -582,103 +696,139 @@ function Navbar({ contactRef }) {
           </div>
 
           {/* RIGHT ACTIONS */}
-          <div className="flex items-center gap-3">
+          <div className="relative">
             <button
               className="hidden lg:flex items-center gap-2 px-4 py-1.5 rounded-full text-sm"
               style={{
                 border: `1px solid ${colors.primaryColor}`,
                 color: colors.primaryColor,
               }}
+              onClick={() => setGlobalOpen(!globalOpen)}
             >
               <Globe size={14} /> Global
+              <span className={`${globalOpen ? "rotate-180" : ""} transition-transform`}>
+                ▾
+              </span>
             </button>
 
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full transition-colors"
-              style={{
-                backgroundColor: isDark
-                  ? colors.grayColor3
-                  : colors.creamLightColor,
-              }}
+            {globalOpen && (
+              <div
+                className="absolute left-0 top-full w-44 rounded-lg shadow-lg overflow-hidden"
+                style={{
+                  backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
+                }}
+              >
+                {[
+                  { name: "Australia", flag: "🇦🇺" },
+                  { name: "Nepal", flag: "🇳🇵" },
+                  { name: "USA", flag: "🇺🇸" },
+                ].map((country) => (
+                  <button
+                    key={country.name}
+                    className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm transition-colors"
+                    style={{
+                      color: isDark ? colors.whiteColor : colors.darkColor,
+                    }}
+                    onClick={() => {
+                      setSelectedCountry(country.name);
+                      setGlobalOpen(false);
+                    }}
+                  >
+                    <span>{country.flag}</span>
+                    <span>{country.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300"
+            style={{
+              borderColor: isDark ? colors.whiteColor : colors.borderColor,
+              backgroundColor: isDark ? colors.grayColor3 : colors.creamLightColor,
+              color: isDark ? colors.whiteColor : colors.darkColor,
+            }}
+          >
+            <span
+              className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-300 ${
+                isDark ? "bg-white text-black" : "bg-black text-white"
+              }`}
             >
-              {isDark ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
+              {isDark ? <Sun size={14} /> : <Moon size={14} />}
+            </span>
+            <span className="text-sm font-medium">
+              {isDark ? "Light" : "Dark"}
+            </span>
+          </button>
 
-            {/* MOBILE TOGGLE */}
+
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden p-2"
             >
               {mobileOpen ? <X /> : <Menu />}
             </button>
-          </div>
         </div>
-
-        {/* MOBILE MENU */}
-        {mobileOpen && (
-          <div
-            className="lg:hidden mt-2 rounded-xl shadow-lg p-4"
-            style={{
-              backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
-            }}
-          >
-            <MobileNavItem to="/services" label="What We Do" colors={colors} />
-            <MobileNavItem to="/blogs" label="What We Think" colors={colors} />
-            <MobileNavItem to="/careers" label="Careers" colors={colors} />
-            <MobileNavItem to="/blogs" label="Blogs" colors={colors} />
-            <button
-              className="w-full text-left mt-2 font-medium"
-              style={{ color: colors.primaryColor }}
-              onClick={() =>
-                contactRef?.current?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Contact Us
-            </button>
-          </div>
-        )}
       </nav>
     </header>
   );
 }
 
-/* ---------- Helper Components ---------- */
+/* ---------- HELPERS ---------- */
+
+function DropdownColumn({ title, items, isDark, colors }) {
+  return (
+    <div>
+      <h4
+        className="font-semibold mb-4 border-l-4 pl-3"
+        style={{
+          borderColor: colors.primaryColor,
+          color: isDark ? colors.whiteColor : colors.darkColor,
+        }}
+      >
+        {title}
+      </h4>
+
+      <ul className="space-y-3 text-sm">
+        {items.map((item) => (
+          <li key={item.label}>
+            <NavLink
+              to={item.to}
+              className="block pl-3 border-l-2 transition-all duration-200"
+              style={{
+                borderColor: "transparent",
+                color: isDark ? "#f9fafb" : colors.darkColor,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = colors.primaryColor;
+                e.currentTarget.style.borderColor = colors.primaryColor;
+                e.currentTarget.style.transform = "translateX(4px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = isDark
+                  ? "#f9fafb"
+                  : colors.darkColor;
+                e.currentTarget.style.borderColor = "transparent";
+                e.currentTarget.style.transform = "translateX(0)";
+              }}
+            >
+              {item.label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 function NavLinkStyled({ to, label, isDark, colors }) {
   return (
     <NavLink
       to={to}
-      className="font-medium transition-colors"
-      style={{
-        color: isDark ? colors.whiteColor : colors.darkColor,
-      }}
-    >
-      {label}
-    </NavLink>
-  );
-}
-
-function NavItem({ to, label, colors }) {
-  return (
-    <li>
-      <NavLink
-        to={to}
-        className="transition-colors"
-        style={{ color: colors.grayColor }}
-      >
-        {label}
-      </NavLink>
-    </li>
-  );
-}
-
-function MobileNavItem({ to, label, colors }) {
-  return (
-    <NavLink
-      to={to}
-      className="block py-2 font-medium"
-      style={{ color: colors.grayColor }}
+      className="font-medium"
+      style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
     >
       {label}
     </NavLink>
