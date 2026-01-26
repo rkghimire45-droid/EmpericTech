@@ -450,7 +450,7 @@ function Navbar({ contactRef }) {
               >
                 What We Do
                 <span className={`transition-transform duration-200 ${openDropdown === "services" ? "rotate-180" : ""}`}>
-                ▾
+                ▼
                 </span>
               </button>
 
@@ -510,7 +510,7 @@ function Navbar({ contactRef }) {
               >
                 About EmpericTech
                 <span className={`transition-transform ${openDropdown === "about" ? "rotate-180" : ""}`}>
-                ▾
+                ▼
                 </span>
               </button>
 
@@ -586,7 +586,7 @@ function Navbar({ contactRef }) {
                 <Globe size={14} />
                 Global
                 <span className={`${globalOpen ? "rotate-180" : ""} transition-transform`}>
-                  ▾
+                  ▼
                 </span>
               </button>
 
