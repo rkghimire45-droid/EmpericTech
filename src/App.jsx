@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { useRef } from "react";
 
 import Navbar from "./Components/Navbar/Navbar";
-import HeroVideo from "./Components/HeroVideo/HeroVideo";
+import HomePage from "./pages/HomePage"
 import Footer from "./Components/Footer/Footer";
 import Contact from "./Components/Contact Us/Contact";
 import Blogs from "./Components/Blogs/Blogs";
@@ -17,8 +17,7 @@ import CyberSecurity from "./pages/services/CyberSecurity";
 import DataSolutions from "./pages/services/DataSolutions";
 import ITBusinessOutsourcing from "./pages/services/ITBusinessOutsourcing";
 import GraphicsAndDesign from "./pages/services/GraphicsDesign";
-
-import "./index.css";
+// import HeroVideo from "./Components/HeroVideo/HeroVideo";
 
 function App() {
   const contactRef = useRef(null);
@@ -33,7 +32,8 @@ function App() {
           path="/"
           element={
             <>
-              <HeroVideo />
+              {/* <HeroVideo /> */}
+              <HomePage/>
               <Blogs />
               <Contact ref={contactRef} />
             </>

@@ -6,26 +6,48 @@ import {
   FaInstagram,
   FaYoutube,
 } from "react-icons/fa6";
-import logo from "../../assets/logo.png";
+import { useTheme } from "../../context/ThemeContext";
+
+// Logos (same pattern you use elsewhere)
+import logoLight from "../../assets/images/logo-light.png";
+import logoDark from "../../assets/images/logo-dark.png";
 
 const Footer = () => {
+  const { theme, colors } = useTheme();
+
+  const isDark = theme === "dark";
+
   return (
-    <footer className="bg-gradient-to-b from-[#020024] via-[#04045e] to-[#020024] text-white">
+    <footer
+      className="transition-colors duration-300"
+      style={{
+        background: isDark
+          ? "linear-gradient(to bottom, #020024, #04045e, #020024)"
+          : colors.creamLightColor,
+        color: isDark ? colors.whiteColor : colors.blackColor,
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 py-14">
 
-        {/* Top Section */}
+        {/* ================= TOP SECTION ================= */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 text-center md:text-left">
 
           {/* Logo & Description */}
           <div>
             <Link to="/" className="inline-block mb-4">
               <img
-                src={logo}
+                src={isDark ? logoDark : logoLight}
                 alt="EmpericTech Logo"
                 className="h-10 mx-auto md:mx-0 cursor-pointer"
               />
             </Link>
-            <p className="text-sm text-gray-300 leading-relaxed">
+
+            <p
+              className="text-sm leading-relaxed"
+              style={{
+                color: isDark ? colors.grayColor2 : colors.grayColor,
+              }}
+            >
               EmpericTech is a global IT services and outsourcing company,
               helping businesses scale through secure, innovative, and
               future-ready digital solutions.
@@ -33,76 +55,56 @@ const Footer = () => {
           </div>
 
           {/* What We Do */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">What We Do</h4>
-            <ul className="space-y-2 text-sm text-gray-300">
-              {[
-                { name: "Web & Mobile Development", path: "/services/web-development" },
-                { name: "Custom Software Solutions", path: "/services/custom-software" },
-                { name: "Cloud & DevOps", path: "/services/cloud-services" },
-                { name: "UI / UX Design", path: "/services/ui-ux-design" },
-                { name: "SEO & Digital Marketing", path: "/services/digital-marketing" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    className="block py-1 hover:text-purple-600 hover:translate-x-1 transition-all duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn
+            title="What We Do"
+            items={[
+              { name: "Web & Mobile Development", path: "/services/web-development" },
+              { name: "IT Support", path: "/services/it-support" },
+              { name: "Cloud Services", path: "/services/cloud-services" },
+              { name: "UI / UX Design", path: "/services/ui-ux-design" },
+              { name: "SEO & Digital Marketing", path: "/services/digital-marketing" },
+            ]}
+            isDark={isDark}
+            colors={colors}
+          />
 
           {/* Who We Are */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Who We Are</h4>
-            <ul className="space-y-2 text-sm text-gray-300">
-              {[
-                { name: "About EmpericTech", path: "/about" },
-                { name: "Leadership", path: "/leadership" },
-                { name: "Careers", path: "/careers" },
-                { name: "Our Clients", path: "/clients" },
-                { name: "Case Studies", path: "/case-studies" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    className="block py-1 hover:text-purple-600 hover:translate-x-1 transition-all duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn
+            title="Who We Are"
+            items={[
+              { name: "About EmpericTech", path: "/about" },
+              { name: "Leadership", path: "/leadership" },
+              { name: "Careers", path: "/careers" },
+              { name: "Our Clients", path: "/clients" },
+              { name: "Case Studies", path: "/case-studies" },
+            ]}
+            isDark={isDark}
+            colors={colors}
+          />
 
           {/* Innovation */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Innovation</h4>
-            <ul className="space-y-2 text-sm text-gray-300">
-              {[
-                { name: "AI-Driven Solutions", path: "/innovation/ai" },
-                { name: "Automation & Analytics", path: "/innovation/automation" },
-                { name: "Digital Transformation", path: "/innovation/digital-transformation" },
-                { name: "Startup Partnerships", path: "/innovation/startups" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    className="block py-1 hover:text-purple-600 hover:translate-x-1 transition-all duration-200"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn
+            title="Innovation"
+            items={[
+              { name: "AI-Driven Solutions", path: "/innovation/ai" },
+              { name: "Automation & Analytics", path: "/innovation/automation" },
+              { name: "Digital Transformation", path: "/innovation/digital-transformation" },
+              { name: "Startup Partnerships", path: "/innovation/startups" },
+            ]}
+            isDark={isDark}
+            colors={colors}
+          />
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/10 mt-12 pt-8">
+        {/* ================= DIVIDER ================= */}
+        <div
+          className="mt-12 pt-8 transition-colors duration-300"
+          style={{
+            borderTop: `1px solid ${
+              isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"
+            }`,
+          }}
+        >
 
           {/* Social Icons */}
           <div className="flex justify-center gap-4 mb-4">
@@ -111,17 +113,31 @@ const Footer = () => {
                 <a
                   key={index}
                   href="#"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 
-                             hover:bg-purple-600 transition-colors duration-300"
+                  className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.1)"
+                      : "rgba(0,0,0,0.08)",
+                  }}
                 >
-                  <Icon className="text-white text-lg" />
+                  <Icon
+                    className="text-lg"
+                    style={{
+                      color: isDark ? colors.whiteColor : colors.blackColor,
+                    }}
+                  />
                 </a>
               )
             )}
           </div>
 
           {/* Policy Links */}
-          <div className="flex justify-center flex-wrap gap-6 text-sm font-medium text-gray-300 mb-4">
+          <div
+            className="flex justify-center flex-wrap gap-6 text-sm font-medium mb-4"
+            style={{
+              color: isDark ? colors.grayColor2 : colors.grayColor,
+            }}
+          >
             <Link to="/privacy-policy" className="hover:text-purple-600 transition">
               Privacy Policy
             </Link>
@@ -134,7 +150,12 @@ const Footer = () => {
           </div>
 
           {/* Copyright */}
-          <p className="text-center text-xs text-gray-400">
+          <p
+            className="text-center text-xs"
+            style={{
+              color: isDark ? colors.grayColor2 : colors.grayColor,
+            }}
+          >
             © 2026 EmpericTech. All rights reserved.
           </p>
         </div>
@@ -144,3 +165,28 @@ const Footer = () => {
 };
 
 export default Footer;
+
+/* ================= SUB COMPONENT ================= */
+
+const FooterColumn = ({ title, items, isDark, colors }) => (
+  <div>
+    <h4 className="text-lg font-semibold mb-4">{title}</h4>
+    <ul
+      className="space-y-2 text-sm"
+      style={{
+        color: isDark ? colors.grayColor2 : colors.grayColor,
+      }}
+    >
+      {items.map((item) => (
+        <li key={item.name}>
+          <Link
+            to={item.path}
+            className="block py-1 hover:text-purple-600 hover:translate-x-1 transition-all duration-200"
+          >
+            {item.name}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
