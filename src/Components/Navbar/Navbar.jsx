@@ -384,19 +384,12 @@
 
 // export default Navbar;
 
-
-
-
-
-
 import { useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Moon, Sun, ChevronDown, Menu, X, Globe } from "lucide-react";
+import { Moon, Sun, Menu, X, Globe } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import LogoDark from "../../assets/images/logo-dark.png";
 import LogoLight from "../../assets/images/logo-light.png";
-import favicon from "../../assets/images/favicon.png";
-import logo from "../../assets/images/logo.png";
 
 function Navbar({ contactRef }) {
   const { theme, toggleTheme, colors } = useTheme();
@@ -404,49 +397,24 @@ function Navbar({ contactRef }) {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [lockedByClick, setLockedByClick] = useState(false);
   const [globalOpen, setGlobalOpen] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("Global");
-
-
 
   const dropdownRef = useRef(null);
   const aboutRef = useRef(null);
   const globalRef = useRef(null);
 
-
-
-  /* Close dropdown on outside click */
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpenDropdown(null);
-        setLockedByClick(false);
+      }
+      if (globalRef.current && !globalRef.current.contains(e.target)) {
+        setGlobalOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-
-  useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setOpenDropdown(null);
-      setLockedByClick(false);
-    }
-
-    if (globalRef.current && !globalRef.current.contains(e.target)) {
-      setGlobalOpen(false);
-    }
-  };
-
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => document.removeEventListener("mousedown", handleClickOutside);
-}, []);
-
-  
 
   return (
     <header
@@ -469,10 +437,8 @@ function Navbar({ contactRef }) {
             />
           </Link>
 
-
           {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center gap-8">
-
+          <div className="hidden lg:flex items-center gap-4 text-sm">
             {/* WHAT WE DO */}
             <div className="relative" ref={dropdownRef}>
               <button
@@ -480,138 +446,53 @@ function Navbar({ contactRef }) {
                   setOpenDropdown(openDropdown === "services" ? null : "services")
                 }
                 className="flex items-center gap-2 font-medium"
-                style={{
-                  color: isDark ? colors.whiteColor : colors.darkColor,
-                }}
+                style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
               >
                 What We Do
-                <span
-                  className={`transition-transform duration-200 ${
-                    openDropdown === "services" ? "rotate-180" : ""
-                  }`}
-                >
-                  ▾
+                <span className={`transition-transform duration-200 ${openDropdown === "services" ? "rotate-180" : ""}`}>
+                ▾
                 </span>
               </button>
 
               {openDropdown === "services" && (
                 <div
-                  className="absolute left-0 mt-6 w-[700px] rounded-xl shadow-xl p-8 grid grid-cols-3 gap-8"
+                  className="absolute left-0 mt-3 w-[650px] rounded-xl shadow-xl p-6 grid grid-cols-3 gap-6"
                   style={{
-                    backgroundColor: isDark
-                      ? colors.grayColor3
-                      : colors.whiteColor,
+                    backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
                   }}
                 >
-                  {/* COLUMN 1 */}
-                  <div>
-                    <h4
-                      className="font-semibold mb-4 border-l-4 pl-3"
-                      style={{
-                        borderColor: colors.primaryColor,
-                        color: isDark ? colors.whiteColor : colors.darkColor,
-                      }}
-                    >
-                      Web & IT Services
-                    </h4>
-                    <ul className="space-y-3 text-sm">
-                      {[
-                        ["Web Development", "/services/web-development"],
-                        ["Cloud Services", "/services/cloud-services"],
-                        ["IT Support", "/services/it-support"],
-                        ["Digital Marketing", "/services/digital-marketing"],
-                      ].map(([label, link]) => (
-                        <li key={label}>
-                          <NavLink
-                            to={link}
-                            className="transition-colors"
-                            style={{
-                              color: isDark ? "#f8f8f8" : colors.grayColor,
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.target.style.color = colors.primaryColor)
-                            }
-                            onMouseLeave={(e) =>
-                              (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
-                            }
-                          >
-                            {label}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <DropdownColumn
+                    title="Web & IT Services"
+                    items={[
+                      { label: "Web Development", to: "/services/web-development" },
+                      { label: "Cloud Services", to: "/services/cloud-services" },
+                      { label: "IT Support", to: "/services/it-support" },
+                      { label: "Digital Marketing", to: "/services/digital-marketing" },
+                    ]}
+                    isDark={isDark}
+                    colors={colors}
+                  />
 
-                  {/* COLUMN 2 */}
-                  <div>
-                    <h4
-                      className="font-semibold mb-4 border-l-4 pl-3"
-                      style={{
-                        borderColor: colors.primaryColor,
-                        color: isDark ? colors.whiteColor : colors.darkColor,
-                      }}
-                    >
-                      Design & Security
-                    </h4>
-                    <ul className="space-y-3 text-sm">
-                      {[
-                        ["UI / UX Design", "/services/ui-ux-design"],
-                        ["Cybersecurity", "/services/cyber-security"],
-                        ["Data Solutions", "/services/data-solutions"],
-                        ["Graphics & Design", "/services/graphics-design"],
-                      ].map(([label, link]) => (
-                        <li key={label}>
-                          <NavLink
-                            to={link}
-                            className="transition-colors"
-                            style={{
-                              color: isDark ? "#f8f8f8" : colors.grayColor,
-                            }}
-                            onMouseEnter={(e) =>
-                              (e.target.style.color = colors.primaryColor)
-                            }
-                            onMouseLeave={(e) =>
-                              (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
-                            }
-                          >
-                            {label}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <DropdownColumn
+                    title="Design & Security"
+                    items={[
+                      { label: "UI / UX Design", to: "/services/ui-ux-design" },
+                      { label: "Cybersecurity", to: "/services/cyber-security" },
+                      { label: "Data Solutions", to: "/services/data-solutions" },
+                      { label: "Graphics & Design", to: "/services/graphics-design" },
+                    ]}
+                    isDark={isDark}
+                    colors={colors}
+                  />
 
-                  {/* COLUMN 3 */}
-                  <div>
-                    <h4
-                      className="font-semibold mb-4 border-l-4 pl-3"
-                      style={{
-                        borderColor: colors.primaryColor,
-                        color: isDark ? colors.whiteColor : colors.darkColor,
-                      }}
-                    >
-                      Business Services
-                    </h4>
-                    <ul className="space-y-3 text-sm">
-                      <li>
-                        <NavLink
-                          to="/services/outsourcing"
-                          className="transition-colors"
-                          style={{
-                            color: isDark ? "#f8f8f8" : colors.grayColor,
-                          }}
-                          onMouseEnter={(e) =>
-                            (e.target.style.color = colors.primaryColor)
-                          }
-                          onMouseLeave={(e) =>
-                            (e.target.style.color = isDark ? "#f8f8f8" : colors.grayColor)
-                          }
-                        >
-                          IT & Business Outsourcing
-                        </NavLink>
-                      </li>
-                    </ul>
-                  </div>
+                  <DropdownColumn
+                    title="Business Services"
+                    items={[
+                      { label: "IT & Business Outsourcing", to: "/services/outsourcing" },
+                    ]}
+                    isDark={isDark}
+                    colors={colors}
+                  />
                 </div>
               )}
             </div>
@@ -621,35 +502,23 @@ function Navbar({ contactRef }) {
             {/* ABOUT */}
             <div className="relative" ref={aboutRef}>
               <button
-                onClick={() => {
-                  if (openDropdown === "about") {
-                    setOpenDropdown(null);
-                    setLockedByClick(false);
-                  } else {
-                    setOpenDropdown("about");
-                    setLockedByClick(true);
-                  }
-                }}
+                onClick={() =>
+                  setOpenDropdown(openDropdown === "about" ? null : "about")
+                }
                 className="flex items-center gap-2 font-medium"
                 style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
               >
                 About EmpericTech
-                <span
-                  className={`transition-transform ${
-                    openDropdown === "about" ? "rotate-180" : ""
-                  }`}
-                >
-                  ▾
+                <span className={`transition-transform ${openDropdown === "about" ? "rotate-180" : ""}`}>
+                ▾
                 </span>
               </button>
 
               {openDropdown === "about" && (
                 <div
-                  className="absolute left-0 mt-6 w-[620px] p-6 grid grid-cols-3 gap-6 rounded-xl shadow-xl"
+                  className="absolute left-0 mt-3 w-[520px] p-5 grid grid-cols-3 gap-4 rounded-xl shadow-xl"
                   style={{
-                    backgroundColor: isDark
-                      ? colors.grayColor3
-                      : colors.whiteColor,
+                    backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
                   }}
                 >
                   {[
@@ -663,16 +532,10 @@ function Navbar({ contactRef }) {
                     <NavLink
                       key={label}
                       to={link}
-                      className="text-sm font-medium transition-colors"
+                      className="text-sm font-medium"
                       style={{
                         color: isDark ? "#ffffff" : colors.darkColor,
                       }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = colors.primaryColor)
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = isDark ? "#ffffff" : colors.darkColor)
-                      }
                     >
                       {label}
                     </NavLink>
@@ -681,95 +544,107 @@ function Navbar({ contactRef }) {
               )}
             </div>
 
-
             <NavLinkStyled to="/careers" label="Careers" isDark={isDark} colors={colors} />
 
             <button
               onClick={() =>
                 contactRef?.current?.scrollIntoView({ behavior: "smooth" })
               }
-              className="font-medium"
-              style={{ color: colors.primaryColor }}
+              className="text-sm font-medium transition-colors duration-200"
+              style={{
+                color: isDark ? colors.whiteColor : "#000000",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = isDark
+                  ? "#e5e7eb"   // soft white hover
+                  : "#111827";  // deep black hover
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = isDark
+                  ? colors.whiteColor
+                  : "#000000";
+              }}
             >
               Contact Us
             </button>
+
           </div>
 
           {/* RIGHT ACTIONS */}
-          <div className="relative">
+          <div className="flex items-center gap-4">
+            <div className="relative" ref={globalRef}>
+              <button
+                className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full text-sm border"
+                style={{
+                  borderColor: colors.primaryColor,
+                  color: colors.primaryColor,
+                  minWidth: "95px",
+                  justifyContent: "center",
+                }}
+                onClick={() => setGlobalOpen(!globalOpen)}
+              >
+                <Globe size={14} />
+                Global
+                <span className={`${globalOpen ? "rotate-180" : ""} transition-transform`}>
+                  ▾
+                </span>
+              </button>
+
+              {globalOpen && (
+                <div
+                  className="absolute left-0 top-full mt-1 w-44 rounded-lg shadow-lg overflow-hidden z-50"
+                  style={{
+                    backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
+                  }}
+                >
+                  {[
+                    { name: "Australia", flag: "🇦🇺" },
+                    { name: "Nepal", flag: "🇳🇵" },
+                    { name: "USA", flag: "🇺🇸" },
+                  ].map((country) => (
+                    <button
+                      key={country.name}
+                      className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm transition-colors"
+                      style={{
+                        color: isDark ? colors.whiteColor : colors.darkColor,
+                      }}
+                      onClick={() => setGlobalOpen(false)}
+                    >
+                      <span>{country.flag}</span>
+                      <span>{country.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button
-              className="hidden lg:flex items-center gap-2 px-4 py-1.5 rounded-full text-sm"
+              onClick={toggleTheme}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm"
               style={{
-                border: `1px solid ${colors.primaryColor}`,
-                color: colors.primaryColor,
+                borderColor: isDark ? colors.whiteColor : colors.borderColor,
+                backgroundColor: isDark ? colors.grayColor3 : colors.creamLightColor,
+                color: isDark ? colors.whiteColor : colors.darkColor,
+                minWidth: "95px",
+                justifyContent: "center",
               }}
-              onClick={() => setGlobalOpen(!globalOpen)}
             >
-              <Globe size={14} /> Global
-              <span className={`${globalOpen ? "rotate-180" : ""} transition-transform`}>
-                ▾
+              <span
+                className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                  isDark ? "bg-white text-black" : "bg-black text-white"
+                }`}
+              >
+                {isDark ? <Sun size={14} /> : <Moon size={14} />}
+              </span>
+              <span className="text-sm font-medium">
+                {isDark ? "Light" : "Dark"}
               </span>
             </button>
 
-            {globalOpen && (
-              <div
-                className="absolute left-0 top-full w-44 rounded-lg shadow-lg overflow-hidden"
-                style={{
-                  backgroundColor: isDark ? colors.grayColor3 : colors.whiteColor,
-                }}
-              >
-                {[
-                  { name: "Australia", flag: "🇦🇺" },
-                  { name: "Nepal", flag: "🇳🇵" },
-                  { name: "USA", flag: "🇺🇸" },
-                ].map((country) => (
-                  <button
-                    key={country.name}
-                    className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm transition-colors"
-                    style={{
-                      color: isDark ? colors.whiteColor : colors.darkColor,
-                    }}
-                    onClick={() => {
-                      setSelectedCountry(country.name);
-                      setGlobalOpen(false);
-                    }}
-                  >
-                    <span>{country.flag}</span>
-                    <span>{country.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300"
-            style={{
-              borderColor: isDark ? colors.whiteColor : colors.borderColor,
-              backgroundColor: isDark ? colors.grayColor3 : colors.creamLightColor,
-              color: isDark ? colors.whiteColor : colors.darkColor,
-            }}
-          >
-            <span
-              className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-300 ${
-                isDark ? "bg-white text-black" : "bg-black text-white"
-              }`}
-            >
-              {isDark ? <Sun size={14} /> : <Moon size={14} />}
-            </span>
-            <span className="text-sm font-medium">
-              {isDark ? "Light" : "Dark"}
-            </span>
-          </button>
-
-
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2"
-            >
+            <button onClick={() => setMobileOpen(!mobileOpen)} className="lg:hidden p-2">
               {mobileOpen ? <X /> : <Menu />}
             </button>
+          </div>
         </div>
       </nav>
     </header>
@@ -807,9 +682,7 @@ function DropdownColumn({ title, items, isDark, colors }) {
                 e.currentTarget.style.transform = "translateX(4px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = isDark
-                  ? "#f9fafb"
-                  : colors.darkColor;
+                e.currentTarget.style.color = isDark ? "#f9fafb" : colors.darkColor;
                 e.currentTarget.style.borderColor = "transparent";
                 e.currentTarget.style.transform = "translateX(0)";
               }}
