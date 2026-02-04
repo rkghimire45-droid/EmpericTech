@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Moon, Sun, Menu, X, Globe } from "lucide-react";
+import { Moon, Sun, Menu, X, Globe, ChevronDown } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import LogoDark from "../../assets/images/logo-dark.png";
 import LogoLight from "../../assets/images/logo-light.png";
@@ -12,6 +12,8 @@ function Navbar({ contactRef }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null); // "services" | "about" | null
   const [globalOpen, setGlobalOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
 
   const dropdownRef = useRef(null);
   const aboutRef = useRef(null);
@@ -45,7 +47,6 @@ function Navbar({ contactRef }) {
       >
         <nav className="w-full px-6 xl:px-10">
           <div className="flex items-center justify-between h-16 md:h-20">
-
             {/* LOGO */}
             <Link to="/" className="flex items-center shrink-0">
               <img
@@ -57,18 +58,23 @@ function Navbar({ contactRef }) {
 
             {/* DESKTOP MENU */}
             <div className="hidden lg:flex items-center gap-10 text-sm font-medium">
-
               {/* WHAT WE DO */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() =>
-                    setOpenDropdown(openDropdown === "services" ? null : "services")
+                    setOpenDropdown(
+                      openDropdown === "services" ? null : "services",
+                    )
                   }
                   className="flex items-center gap-2 hover:text-[#8750f7] transition-colors"
-                  style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+                  style={{
+                    color: isDark ? colors.whiteColor : colors.darkColor,
+                  }}
                 >
                   What We Do
-                  <span className={`transition-transform duration-200 ${openDropdown === "services" ? "rotate-180" : ""}`}>
+                  <span
+                    className={`transition-transform duration-200 ${openDropdown === "services" ? "rotate-180" : ""}`}
+                  >
                     ▼
                   </span>
                 </button>
@@ -86,25 +92,49 @@ function Navbar({ contactRef }) {
                     <DropdownColumn
                       title="Web & IT Services"
                       items={[
-                        { label: "Web Development", to: "/services/web-development" },
-                        { label: "Cloud Services", to: "/services/cloud-services" },
+                        {
+                          label: "Web Development",
+                          to: "/services/web-development",
+                        },
+                        {
+                          label: "Cloud Services",
+                          to: "/services/cloud-services",
+                        },
                         { label: "IT Support", to: "/services/it-support" },
-                        { label: "Digital Marketing", to: "/services/digital-marketing" },
+                        {
+                          label: "Digital Marketing",
+                          to: "/services/digital-marketing",
+                        },
                       ]}
                     />
                     <DropdownColumn
                       title="Design & Security"
                       items={[
-                        { label: "UI / UX Design", to: "/services/ui-ux-design" },
-                        { label: "Cybersecurity", to: "/services/cyber-security" },
-                        { label: "Data Solutions", to: "/services/data-solutions" },
-                        { label: "Graphics & Design", to: "/services/graphics-design" },
+                        {
+                          label: "UI / UX Design",
+                          to: "/services/ui-ux-design",
+                        },
+                        {
+                          label: "Cybersecurity",
+                          to: "/services/cyber-security",
+                        },
+                        {
+                          label: "Data Solutions",
+                          to: "/services/data-solutions",
+                        },
+                        {
+                          label: "Graphics & Design",
+                          to: "/services/graphics-design",
+                        },
                       ]}
                     />
                     <DropdownColumn
                       title="Business Services"
                       items={[
-                        { label: "IT & Business Outsourcing", to: "/services/outsourcing" },
+                        {
+                          label: "IT & Business Outsourcing",
+                          to: "/services/outsourcing",
+                        },
                       ]}
                     />
                   </div>
@@ -118,10 +148,14 @@ function Navbar({ contactRef }) {
                     setOpenDropdown(openDropdown === "about" ? null : "about")
                   }
                   className="flex items-center gap-2 hover:text-[#8750f7] transition-colors"
-                  style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+                  style={{
+                    color: isDark ? colors.whiteColor : colors.darkColor,
+                  }}
                 >
                   About EmpericTech
-                  <span className={`transition-transform duration-200 ${openDropdown === "about" ? "rotate-180" : ""}`}>
+                  <span
+                    className={`transition-transform duration-200 ${openDropdown === "about" ? "rotate-180" : ""}`}
+                  >
                     ▼
                   </span>
                 </button>
@@ -173,9 +207,10 @@ function Navbar({ contactRef }) {
                 Careers
               </NavLink>
 
-
               <button
-                onClick={() => contactRef?.current?.scrollIntoView({ behavior: "smooth" })}
+                onClick={() =>
+                  contactRef?.current?.scrollIntoView({ behavior: "smooth" })
+                }
                 className="hover:text-[#8750f7] transition-colors"
                 style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
               >
@@ -185,7 +220,6 @@ function Navbar({ contactRef }) {
 
             {/* RIGHT ACTIONS */}
             <div className="hidden lg:flex items-center gap-4">
-
               {/* GLOBAL – centered dropdown */}
               <div className="relative" ref={globalRef}>
                 <button
@@ -193,11 +227,15 @@ function Navbar({ contactRef }) {
                   className="flex items-center gap-2 px-5 h-11 rounded-full border transition-colors"
                   style={{
                     color: isDark ? colors.whiteColor : colors.darkColor,
-                    borderColor: isDark ? "rgba(255,255,255,0.3)" : colors.borderColor,
+                    borderColor: isDark
+                      ? "rgba(255,255,255,0.3)"
+                      : colors.borderColor,
                   }}
                 >
                   <Globe size={16} /> Global
-                  <span className={`transition-transform ${globalOpen ? "rotate-180" : ""}`}>
+                  <span
+                    className={`transition-transform ${globalOpen ? "rotate-180" : ""}`}
+                  >
                     ▼
                   </span>
                 </button>
@@ -217,12 +255,13 @@ function Navbar({ contactRef }) {
                         key={c}
                         onClick={() => setGlobalOpen(false)}
                         className="w-full flex items-center justify-center gap-2 px-5 py-2.5 text-sm transition-colors hover:text-[#8750f7]"
-                        style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+                        style={{
+                          color: isDark ? colors.whiteColor : colors.darkColor,
+                        }}
                       >
                         {c}
                       </button>
                     ))}
-
                   </div>
                 )}
               </div>
@@ -233,7 +272,9 @@ function Navbar({ contactRef }) {
                 className="flex items-center gap-2 px-5 h-11 rounded-full border transition-colors"
                 style={{
                   color: isDark ? colors.whiteColor : colors.darkColor,
-                  borderColor: isDark ? "rgba(255,255,255,0.3)" : colors.borderColor,
+                  borderColor: isDark
+                    ? "rgba(255,255,255,0.3)"
+                    : colors.borderColor,
                 }}
               >
                 {isDark ? <Sun size={16} /> : <Moon size={16} />}
@@ -250,6 +291,242 @@ function Navbar({ contactRef }) {
             </button>
           </div>
         </nav>
+
+        {/* MOBILE MENU */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${
+            mobileOpen ? "max-h-screen" : "max-h-0"
+          }`}
+          style={{
+            backgroundColor: isDark ? "#0a0a0a" : colors.whiteColor,
+          }}
+        >
+          <div className="px-6 py-4 space-y-4">
+            {/* WHAT WE DO - Mobile */}
+            <div>
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center justify-between w-full py-3 text-base font-medium"
+                style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+              >
+                What We Do
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform ${
+                    mobileServicesOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {mobileServicesOpen && (
+                <div className="pl-4 space-y-2 mt-2">
+                  <MobileServiceGroup
+                    title="Web & IT Services"
+                    items={[
+                      {
+                        label: "Web Development",
+                        to: "/services/web-development",
+                      },
+                      {
+                        label: "Cloud Services",
+                        to: "/services/cloud-services",
+                      },
+                      { label: "IT Support", to: "/services/it-support" },
+                      {
+                        label: "Digital Marketing",
+                        to: "/services/digital-marketing",
+                      },
+                    ]}
+                    onClick={() => setMobileOpen(false)}
+                  />
+                  <MobileServiceGroup
+                    title="Design & Security"
+                    items={[
+                      { label: "UI / UX Design", to: "/services/ui-ux-design" },
+                      {
+                        label: "Cybersecurity",
+                        to: "/services/cyber-security",
+                      },
+                      {
+                        label: "Data Solutions",
+                        to: "/services/data-solutions",
+                      },
+                      {
+                        label: "Graphics & Design",
+                        to: "/services/graphics-design",
+                      },
+                    ]}
+                    onClick={() => setMobileOpen(false)}
+                  />
+                  <MobileServiceGroup
+                    title="Business Services"
+                    items={[
+                      {
+                        label: "IT & Business Outsourcing",
+                        to: "/services/outsourcing",
+                      },
+                    ]}
+                    onClick={() => setMobileOpen(false)}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div
+              className="h-px"
+              style={{
+                backgroundColor: isDark
+                  ? "rgba(255,255,255,0.1)"
+                  : colors.borderColor,
+              }}
+            />
+
+            {/* ABOUT EMPERIC TECH - Mobile */}
+            <div>
+              <button
+                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                className="flex items-center justify-between w-full py-3 text-base font-medium"
+                style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+              >
+                About EmpericTech
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform ${
+                    mobileAboutOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {mobileAboutOpen && (
+                <div className="pl-4 space-y-3 mt-2">
+                  {[
+                    { label: "About Us", to: "/about" },
+                    { label: "Case Studies", to: "/case-studies" },
+                    { label: "Leadership", to: "/leadership" },
+                    { label: "News", to: "/news" },
+                    { label: "Privacy", to: "/privacy" },
+                    { label: "Wellbeing", to: "/wellbeing" },
+                  ].map((item) => (
+                    <NavLink
+                      key={item.label}
+                      to={item.to}
+                      className="block py-2 text-sm hover:text-[#8750f7] transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                      style={{
+                        color: isDark ? colors.whiteColor : colors.darkColor,
+                      }}
+                    >
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div
+              className="h-px"
+              style={{
+                backgroundColor: isDark
+                  ? "rgba(255,255,255,0.1)"
+                  : colors.borderColor,
+              }}
+            />
+
+            {/* WHAT WE THINK */}
+            <NavLink
+              to="/blogs"
+              className="block py-3 text-base font-medium hover:text-[#8750f7] transition-colors"
+              onClick={() => setMobileOpen(false)}
+              style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+            >
+              What We Think
+            </NavLink>
+
+            <div
+              className="h-px"
+              style={{
+                backgroundColor: isDark
+                  ? "rgba(255,255,255,0.1)"
+                  : colors.borderColor,
+              }}
+            />
+
+            {/* CAREERS */}
+            <NavLink
+              to="/careers"
+              className="block py-3 text-base font-medium hover:text-[#8750f7] transition-colors"
+              onClick={() => setMobileOpen(false)}
+              style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+            >
+              Careers
+            </NavLink>
+
+            <div
+              className="h-px"
+              style={{
+                backgroundColor: isDark
+                  ? "rgba(255,255,255,0.1)"
+                  : colors.borderColor,
+              }}
+            />
+
+            {/* CONTACT US */}
+            <button
+              onClick={() => {
+                setMobileOpen(false);
+                contactRef?.current?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="block w-full text-left py-3 text-base font-medium hover:text-[#8750f7] transition-colors"
+              style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+            >
+              Contact Us
+            </button>
+
+            <div
+              className="h-px"
+              style={{
+                backgroundColor: isDark
+                  ? "rgba(255,255,255,0.1)"
+                  : colors.borderColor,
+              }}
+            />
+
+            {/* GLOBAL & THEME - Mobile */}
+            <div className="flex items-center gap-3 pt-2">
+              {/* Global Selector */}
+              <select
+                className="flex-1 px-4 py-3 rounded-lg border text-sm"
+                style={{
+                  backgroundColor: isDark ? "#111827" : colors.whiteColor,
+                  color: isDark ? colors.whiteColor : colors.darkColor,
+                  borderColor: isDark
+                    ? "rgba(255,255,255,0.2)"
+                    : colors.borderColor,
+                }}
+              >
+                <option>🌍 Australia 🇦🇺</option>
+                <option>🌍 Nepal 🇳🇵</option>
+                <option>🌍 USA 🇺🇸</option>
+              </select>
+
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                className="px-4 py-3 rounded-lg border flex items-center gap-2 text-sm"
+                style={{
+                  backgroundColor: isDark ? "#111827" : colors.whiteColor,
+                  color: isDark ? colors.whiteColor : colors.darkColor,
+                  borderColor: isDark
+                    ? "rgba(255,255,255,0.2)"
+                    : colors.borderColor,
+                }}
+              >
+                {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                {isDark ? "Light" : "Dark"}
+              </button>
+            </div>
+          </div>
+        </div>
       </header>
 
       <div className="h-16 md:h-20" />
@@ -282,12 +559,38 @@ function DropdownColumn({ title, items }) {
 
 function NavItem({ to, label }) {
   return (
-    <NavLink
-      to={to}
-      className="hover:text-[#8750f7] transition-colors"
-    >
+    <NavLink to={to} className="hover:text-[#8750f7] transition-colors">
       {label}
     </NavLink>
+  );
+}
+
+function MobileServiceGroup({ title, items, onClick }) {
+  const { theme, colors } = useTheme();
+  const isDark = theme === "dark";
+
+  return (
+    <div className="mb-4">
+      <h5
+        className="text-xs font-semibold mb-2 uppercase tracking-wide"
+        style={{ color: "#8750f7" }}
+      >
+        {title}
+      </h5>
+      <div className="space-y-2">
+        {items.map((item) => (
+          <NavLink
+            key={item.label}
+            to={item.to}
+            className="block py-2 text-sm hover:text-[#8750f7] transition-colors pl-2"
+            onClick={onClick}
+            style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </div>
+    </div>
   );
 }
 
