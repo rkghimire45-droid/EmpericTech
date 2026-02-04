@@ -35,6 +35,19 @@ function Navbar({ contactRef }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+  if (mobileOpen) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [mobileOpen]);
+
+
   return (
     <>
       <header
@@ -284,23 +297,26 @@ function Navbar({ contactRef }) {
 
             {/* MOBILE BUTTON */}
             <button
-              className="lg:hidden p-2"
+              className="lg:hidden p-2 transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
+              style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
             >
               {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
+
           </div>
         </nav>
 
         {/* MOBILE MENU */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            mobileOpen ? "max-h-screen" : "max-h-0"
-          }`}
+          className={`lg:hidden transition-all duration-300 ${
+            mobileOpen ? "max-h-[calc(100vh-4rem)]" : "max-h-0"
+          } overflow-y-auto`}
           style={{
             backgroundColor: isDark ? "#0a0a0a" : colors.whiteColor,
           }}
         >
+
           <div className="px-6 py-4 space-y-4">
             {/* WHAT WE DO - Mobile */}
             <div>
