@@ -526,7 +526,7 @@ const BlogCard = memo(({ blog, theme, colors, index }) => {
 
   return (
     <Link
-      to={`/blog/${blog.id}`}
+      to={`/blogs/${blog.id}`}   // ✅ FIXED ROUTE
       className="group block h-full animate-fade-in-up"
       style={{ animationDelay: `${index * 100}ms` }}
       onMouseEnter={() => setHovered(true)}
@@ -562,7 +562,9 @@ const BlogCard = memo(({ blog, theme, colors, index }) => {
             className="block text-sm mb-2"
             style={{
               color:
-                theme === "dark" ? colors.grayColor2 : colors.grayColor,
+                theme === "dark"
+                  ? colors.grayColor2
+                  : colors.grayColor,
             }}
           >
             {blog.date}
@@ -572,7 +574,9 @@ const BlogCard = memo(({ blog, theme, colors, index }) => {
             className="text-xl font-bold mb-3 line-clamp-2"
             style={{
               color:
-                theme === "dark" ? colors.whiteColor : colors.blackColor,
+                theme === "dark"
+                  ? colors.whiteColor
+                  : colors.blackColor,
             }}
           >
             {blog.title}
@@ -582,7 +586,9 @@ const BlogCard = memo(({ blog, theme, colors, index }) => {
             className="text-sm mb-4 line-clamp-3"
             style={{
               color:
-                theme === "dark" ? colors.grayColor2 : colors.grayColor,
+                theme === "dark"
+                  ? colors.grayColor2
+                  : colors.grayColor,
             }}
           >
             {blog.excerpt}
@@ -602,7 +608,7 @@ const FeaturedBlogCard = memo(({ blog, theme, colors }) => {
   if (!blog) return null;
 
   return (
-    <Link to={`/blog/${blog.id}`} className="block">
+    <Link to={`/blogs/${blog.id}`} className="block"> {/* ✅ FIXED */}
       <article
         className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01]"
         style={{
@@ -689,9 +695,10 @@ const Blog = () => {
     []
   );
 
-  const featuredBlog = useMemo(() => {
-    return activeFilter === "All" ? blogData[0] : null;
-  }, [activeFilter]);
+  const featuredBlog = useMemo(
+    () => (activeFilter === "All" ? blogData[0] : null),
+    [activeFilter]
+  );
 
   const regularBlogs = useMemo(() => {
     if (activeFilter === "All") return blogData.slice(1);

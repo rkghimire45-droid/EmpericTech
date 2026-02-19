@@ -65,28 +65,26 @@ function Navbar({ contactRef }) {
               <img
                 src={isDark ? LogoDark : LogoLight}
                 alt="EmpericTech"
-                className="h-9 md:h-11"
+                className="h-7 md:h-9"
               />
             </Link>
 
             {/* DESKTOP MENU */}
-            <div className="hidden lg:flex items-center gap-10 text-sm font-medium">
-              {/* WHAT WE DO */}
+            <div className="hidden lg:flex items-center gap-12 text-[12px] tracking-wide font-medium">
+              {/* WHAT WE DO - MEGA DROPDOWN */}
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() =>
-                    setOpenDropdown(
-                      openDropdown === "services" ? null : "services",
-                    )
+                    setOpenDropdown(openDropdown === "services" ? null : "services")
                   }
-                  className="flex items-center gap-2 hover:text-[#8750f7] transition-colors"
-                  style={{
-                    color: isDark ? colors.whiteColor : colors.darkColor,
-                  }}
+                  className="flex items-center gap-2 transition-colors duration-300 hover:text-[#8750f7]"
+                  style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
                 >
                   What We Do
-                  <span
-                    className={`transition-transform duration-200 ${openDropdown === "services" ? "rotate-180" : ""}`}
+                  <span 
+                    className={`transition-transform duration-200 ${
+                      openDropdown === "services" ? "rotate-180" : ""
+                    }`}
                   >
                     ▼
                   </span>
@@ -94,80 +92,60 @@ function Navbar({ contactRef }) {
 
                 {openDropdown === "services" && (
                   <div
-                    className="absolute left-0 top-full mt-6 w-[720px] grid grid-cols-3 gap-8 p-8 rounded-2xl shadow-2xl"
+                    className="absolute left-0 top-full mt-6 w-[720px] grid grid-cols-3 gap-8 p-8 rounded-2xl shadow-2xl transition-colors duration-300"
                     style={{
-                      backgroundColor: isDark ? "#111827" : colors.whiteColor,
-                      border: isDark
-                        ? "1px solid rgba(255,255,255,0.08)"
-                        : `1px solid ${colors.borderColor}`,
+                      backgroundColor: isDark ? colors.darkColor : colors.whiteColor,
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.9)" : colors.borderColor}`,
                     }}
                   >
                     <DropdownColumn
                       title="Web & IT Services"
                       items={[
-                        {
-                          label: "Web Development",
-                          to: "/services/web-development",
-                        },
-                        {
-                          label: "Cloud Services",
-                          to: "/services/cloud-services",
-                        },
+                        { label: "Web Development", to: "/services/web-development" },
+                        { label: "Cloud Services", to: "/services/cloud-services" },
                         { label: "IT Support", to: "/services/it-support" },
-                        {
-                          label: "Digital Marketing",
-                          to: "/services/digital-marketing",
-                        },
+                        { label: "Digital Marketing", to: "/services/digital-marketing" },
                       ]}
+                      isDark={isDark}
+                      colors={colors}
                     />
                     <DropdownColumn
                       title="Design & Security"
                       items={[
-                        {
-                          label: "UI / UX Design",
-                          to: "/services/ui-ux-design",
-                        },
-                        {
-                          label: "Cybersecurity",
-                          to: "/services/cyber-security",
-                        },
-                        {
-                          label: "Data Solutions",
-                          to: "/services/data-solutions",
-                        },
-                        {
-                          label: "Graphics & Design",
-                          to: "/services/graphics-design",
-                        },
+                        { label: "UI / UX Design", to: "/services/ui-ux-design" },
+                        { label: "Cybersecurity", to: "/services/cyber-security" },
+                        { label: "Data Solutions", to: "/services/data-solutions" },
+                        { label: "Graphics & Design", to: "/services/graphics-design" },
                       ]}
+                      isDark={isDark}
+                      colors={colors}
                     />
                     <DropdownColumn
                       title="Business Services"
                       items={[
-                        {
-                          label: "IT & Business Outsourcing",
-                          to: "/services/outsourcing",
-                        },
+                        { label: "IT & Business Outsourcing", to: "/services/outsourcing" },
                       ]}
+                      isDark={isDark}
+                      colors={colors}
                     />
                   </div>
                 )}
               </div>
 
-              {/* ABOUT EMPERIC TECH */}
+              {/* ABOUT EMPERIC TECH - DROPDOWN */}
               <div className="relative" ref={aboutRef}>
                 <button
                   onClick={() =>
                     setOpenDropdown(openDropdown === "about" ? null : "about")
                   }
-                  className="flex items-center gap-2 hover:text-[#8750f7] transition-colors"
-                  style={{
-                    color: isDark ? colors.whiteColor : colors.darkColor,
-                  }}
+                  className="flex items-center gap-2 transition-colors duration-300 hover:text-[#8750f7]"
+                  style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
                 >
                   About EmpericTech
-                  <span
-                    className={`transition-transform duration-200 ${openDropdown === "about" ? "rotate-180" : ""}`}
+                  <span 
+                    className={`transition-transform duration-200 ${
+                      openDropdown === "about" ? "rotate-180" : ""
+                    }`}
                   >
                     ▼
                   </span>
@@ -175,12 +153,10 @@ function Navbar({ contactRef }) {
 
                 {openDropdown === "about" && (
                   <div
-                    className="absolute left-0 top-full mt-6 w-[480px] grid grid-cols-3 gap-6 p-8 rounded-2xl shadow-2xl"
+                    className="absolute left-0 top-full mt-6 w-[480px] grid grid-cols-3 gap-6 p-8 rounded-2xl shadow-2xl transition-colors duration-300"
                     style={{
-                      backgroundColor: isDark ? "#111827" : colors.whiteColor,
-                      border: isDark
-                        ? "1px solid rgba(255,255,255,0.08)"
-                        : `1px solid ${colors.borderColor}`,
+                      backgroundColor: isDark ? colors.darkColor : colors.whiteColor,
+                      border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : colors.borderColor}`,
                     }}
                   >
                     {[
@@ -194,8 +170,9 @@ function Navbar({ contactRef }) {
                       <NavLink
                         key={item.label}
                         to={item.to}
-                        className="hover:text-[#8750f7] transition-colors"
+                        className="transition-colors duration-300 hover:text-[#8750f7]"
                         onClick={() => setOpenDropdown(null)}
+                        style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
                       >
                         {item.label}
                       </NavLink>
@@ -237,21 +214,26 @@ function Navbar({ contactRef }) {
               <div className="relative" ref={globalRef}>
                 <button
                   onClick={() => setGlobalOpen(!globalOpen)}
-                  className="flex items-center gap-2 px-5 h-11 rounded-full border transition-colors"
+                  className="flex items-center gap-1 px-3 h-8 text-xs rounded-full border transition-colors"
                   style={{
                     color: isDark ? colors.whiteColor : colors.darkColor,
                     borderColor: isDark
-                      ? "rgba(255,255,255,0.3)"
+                      ? "rgba(255,255,255,0.25)"
                       : colors.borderColor,
                   }}
                 >
-                  <Globe size={16} /> Global
+                  <Globe size={12} />
+                  <span>Global</span>
                   <span
-                    className={`transition-transform ${globalOpen ? "rotate-180" : ""}`}
+                    className={`text-[10px] transition-transform duration-200 ${
+                      globalOpen ? "rotate-180" : ""
+                    }`}
                   >
                     ▼
                   </span>
                 </button>
+
+
 
                 {globalOpen && (
                   <div
@@ -282,17 +264,18 @@ function Navbar({ contactRef }) {
               {/* THEME TOGGLE */}
               <button
                 onClick={toggleTheme}
-                className="flex items-center gap-2 px-5 h-11 rounded-full border transition-colors"
+                className="flex items-center gap-1 px-3 h-8 text-xs rounded-full border transition-colors"
                 style={{
                   color: isDark ? colors.whiteColor : colors.darkColor,
                   borderColor: isDark
-                    ? "rgba(255,255,255,0.3)"
+                    ? "rgba(255,255,255,0.25)"
                     : colors.borderColor,
                 }}
               >
-                {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                {isDark ? "Light" : "Dark"}
+                {isDark ? <Sun size={12} /> : <Moon size={12} />}
+                <span>{isDark ? "Light" : "Dark"}</span>
               </button>
+
             </div>
 
             {/* MOBILE BUTTON */}
@@ -551,10 +534,16 @@ function Navbar({ contactRef }) {
 }
 
 /* HELPERS */
-function DropdownColumn({ title, items }) {
+function DropdownColumn({ title, items, isDark, colors }) {
   return (
     <div>
-      <h4 className="font-semibold mb-4 border-l-4 pl-3 border-[#8750f7] text-base">
+      <h4 
+        className="font-semibold mb-4 border-l-4 pl-3 text-base transition-colors duration-300"
+        style={{ 
+          borderColor: colors.primaryColor || "#8750f7",
+          color: isDark ? colors.whiteColor : colors.darkColor
+        }}
+      >
         {title}
       </h4>
       <ul className="space-y-3 text-sm">
@@ -562,9 +551,15 @@ function DropdownColumn({ title, items }) {
           <li key={i.label}>
             <NavLink
               to={i.to}
-              className="hover:text-[#8750f7] transition-colors block"
+              className="transition-colors duration-300 hover:text-[#8750f7] block relative group"
+              style={{ color: isDark ? colors.grayColor : colors.darkColor }}
             >
-              {i.label}
+              <span className="relative">
+                {i.label}
+                <span 
+                  className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[#8750f7] transition-all duration-300 group-hover:w-full"
+                />
+              </span>
             </NavLink>
           </li>
         ))}
@@ -588,8 +583,8 @@ function MobileServiceGroup({ title, items, onClick }) {
   return (
     <div className="mb-4">
       <h5
-        className="text-xs font-semibold mb-2 uppercase tracking-wide"
-        style={{ color: "#8750f7" }}
+        className="text-xs font-semibold mb-2 uppercase tracking-wide transition-colors duration-300"
+        style={{ color: colors.primaryColor || "#8750f7" }}
       >
         {title}
       </h5>
@@ -598,7 +593,7 @@ function MobileServiceGroup({ title, items, onClick }) {
           <NavLink
             key={item.label}
             to={item.to}
-            className="block py-2 text-sm hover:text-[#8750f7] transition-colors pl-2"
+            className="block py-2 text-sm transition-colors duration-300 hover:text-[#8750f7] pl-2"
             onClick={onClick}
             style={{ color: isDark ? colors.whiteColor : colors.darkColor }}
           >

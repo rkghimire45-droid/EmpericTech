@@ -2,12 +2,16 @@ import { Routes, Route } from "react-router-dom";
 import { useRef } from "react";
 
 import Navbar from "./Components/Navbar/Navbar";
-import HomePage from "./pages/HomePage"
 import Footer from "./Components/Footer/Footer";
 import Contact from "./Components/Contact Us/Contact";
+
+import HomePage from "./pages/HomePage";
+
+// Blog pages
 import Blogs from "./Components/Blogs/Blogs";
 import BlogDetails from "./Components/Blogs/BlogDetails";
 
+// Services pages
 import WebDevelopment from "./pages/services/WebDevelopment";
 import CloudServices from "./pages/services/CloudServices";
 import ITSupport from "./pages/services/ITSupport";
@@ -17,7 +21,6 @@ import CyberSecurity from "./pages/services/CyberSecurity";
 import DataSolutions from "./pages/services/DataSolutions";
 import ITBusinessOutsourcing from "./pages/services/ITBusinessOutsourcing";
 import GraphicsAndDesign from "./pages/services/GraphicsDesign";
-// import HeroVideo from "./Components/HeroVideo/HeroVideo";
 
 function App() {
   const contactRef = useRef(null);
@@ -32,15 +35,15 @@ function App() {
           path="/"
           element={
             <>
-              {/* <HeroVideo /> */}
-              <HomePage/>
+              <HomePage />
+              {/* Blog preview ONLY */}
               <Blogs />
               <Contact ref={contactRef} />
             </>
           }
         />
 
-        {/* Blogs */}
+        {/* Blog Pages */}
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
 
