@@ -147,7 +147,7 @@ const HeroText = () => {
       { value: "500+", label: "Clients Served" },
       { value: "98%", label: "Satisfaction Rate" },
       { value: "24/7", label: "Support Available" },
-      { value: "15+", label: "Years Experience" },
+      { value: "5+", label: "Years Experience" },
     ],
     []
   );

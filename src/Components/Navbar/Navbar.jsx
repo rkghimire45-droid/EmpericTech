@@ -70,7 +70,7 @@ function Navbar({ contactRef }) {
             </Link>
 
             {/* DESKTOP MENU */}
-            <div className="hidden lg:flex items-center gap-12 text-[12px] tracking-wide font-medium">
+            <div className="hidden lg:flex items-center gap-12 text-[13px] tracking-wide font-medium">
               {/* WHAT WE DO - MEGA DROPDOWN */}
               <div className="relative" ref={dropdownRef}>
                 <button
