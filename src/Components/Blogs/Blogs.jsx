@@ -1,694 +1,292 @@
-// import { useTheme } from "../../context/ThemeContext";
-// import { memo, useMemo, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { blogData } from "./blogData";
-
-// // Category Badge Component
-// const CategoryBadge = memo(({ category, theme, colors }) => (
-//   <span
-//     className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-110"
-//     style={{
-//       backgroundColor: theme === "dark" 
-//         ? "rgba(99, 102, 241, 0.15)" 
-//         : "rgba(99, 102, 241, 0.1)",
-//       color: "#6366f1",
-//       border: "1px solid rgba(99, 102, 241, 0.3)",
-//     }}
-//   >
-//     {category}
-//   </span>
-// ));
-
-// CategoryBadge.displayName = "CategoryBadge";
-
-// // Blog Card Component
-// const BlogCard = memo(({ blog, theme, colors, index }) => {
-//   const [isHovered, setIsHovered] = useState(false);
-
-//   return (
-//     <Link
-//       to={`/blog/${blog.id}`}
-//       className="group block h-full"
-//       onMouseEnter={() => setIsHovered(true)}
-//       onMouseLeave={() => setIsHovered(false)}
-//       style={{
-//         animationDelay: `${index * 100}ms`,
-//       }}
-//     >
-//       <article
-//         className="h-full rounded-2xl overflow-hidden backdrop-blur-md transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2"
-//         style={{
-//           backgroundColor: theme === "dark"
-//             ? "rgba(255, 255, 255, 0.05)"
-//             : "rgba(255, 255, 255, 0.8)",
-//           border: `1px solid ${
-//             theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
-//           }`,
-//           boxShadow: theme === "dark"
-//             ? "0 8px 32px rgba(0, 0, 0, 0.3)"
-//             : "0 8px 32px rgba(0, 0, 0, 0.1)",
-//         }}
-//       >
-//         {/* Image Container */}
-//         <div className="relative h-56 overflow-hidden">
-//           <img
-//             src={blog.image}
-//             alt={blog.title}
-//             className="w-full h-full object-cover transition-transform duration-700"
-//             style={{
-//               transform: isHovered ? "scale(1.1)" : "scale(1)",
-//             }}
-//           />
-//           {/* Gradient Overlay */}
-//           <div
-//             className="absolute inset-0 transition-opacity duration-500"
-//             style={{
-//               background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)",
-//               opacity: isHovered ? 0.8 : 0.6,
-//             }}
-//           />
-//           {/* Category Badge on Image */}
-//           <div className="absolute top-4 left-4">
-//             <CategoryBadge category={blog.category} theme={theme} colors={colors} />
-//           </div>
-//         </div>
-
-//         {/* Content */}
-//         <div className="p-6">
-//           {/* Date */}
-//           <time
-//             className="block text-sm font-medium mb-3 transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//             }}
-//           >
-//             {blog.date}
-//           </time>
-
-//           {/* Title */}
-//           <h3
-//             className="text-xl md:text-2xl font-bold mb-3 line-clamp-2 transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//             }}
-//           >
-//             {blog.title}
-//           </h3>
-
-//           {/* Excerpt */}
-//           <p
-//             className="text-sm md:text-base line-clamp-3 mb-4 transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//             }}
-//           >
-//             {blog.excerpt}
-//           </p>
-
-//           {/* Read More Link */}
-//           <div className="flex items-center gap-2 group/link">
-//             <span
-//               className="text-sm font-semibold transition-colors duration-300"
-//               style={{
-//                 color: "#6366f1",
-//               }}
-//             >
-//               Read More
-//             </span>
-//             <svg
-//               className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-2"
-//               fill="none"
-//               stroke="#6366f1"
-//               viewBox="0 0 24 24"
-//             >
-//               <path
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 strokeWidth={2}
-//                 d="M13 7l5 5m0 0l-5 5m5-5H6"
-//               />
-//             </svg>
-//           </div>
-//         </div>
-//       </article>
-//     </Link>
-//   );
-// });
-
-// BlogCard.displayName = "BlogCard";
-
-// // Featured Blog Card
-// const FeaturedBlogCard = memo(({ blog, theme, colors }) => {
-//   const [isHovered, setIsHovered] = useState(false);
-
-//   return (
-//     <Link
-//       to={`/blog/${blog.id}`}
-//       className="group block"
-//       onMouseEnter={() => setIsHovered(true)}
-//       onMouseLeave={() => setIsHovered(false)}
-//     >
-//       <article
-//         className="rounded-3xl overflow-hidden backdrop-blur-md transition-all duration-500 hover:scale-[1.01]"
-//         style={{
-//           backgroundColor: theme === "dark"
-//             ? "rgba(255, 255, 255, 0.05)"
-//             : "rgba(255, 255, 255, 0.8)",
-//           border: `1px solid ${
-//             theme === "dark" ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.15)"
-//           }`,
-//           boxShadow: theme === "dark"
-//             ? "0 20px 60px rgba(0, 0, 0, 0.4)"
-//             : "0 20px 60px rgba(0, 0, 0, 0.15)",
-//         }}
-//       >
-//         <div className="grid md:grid-cols-2 gap-6">
-//           {/* Image */}
-//           <div className="relative h-64 md:h-full overflow-hidden">
-//             <img
-//               src={blog.image}
-//               alt={blog.title}
-//               className="w-full h-full object-cover transition-transform duration-700"
-//               style={{
-//                 transform: isHovered ? "scale(1.1)" : "scale(1)",
-//               }}
-//             />
-//             <div
-//               className="absolute inset-0 transition-opacity duration-500"
-//               style={{
-//                 background: "linear-gradient(135deg, rgba(99,102,241,0.3) 0%, rgba(139,92,246,0.3) 100%)",
-//                 opacity: isHovered ? 0.6 : 0.3,
-//               }}
-//             />
-//             <div className="absolute top-6 left-6">
-//               <span
-//                 className="inline-block px-4 py-2 rounded-full text-sm font-bold tracking-wider uppercase backdrop-blur-md"
-//                 style={{
-//                   backgroundColor: "rgba(255, 255, 255, 0.9)",
-//                   color: "#6366f1",
-//                 }}
-//               >
-//                 Featured
-//               </span>
-//             </div>
-//           </div>
-
-//           {/* Content */}
-//           <div className="p-8 flex flex-col justify-center">
-//             <CategoryBadge category={blog.category} theme={theme} colors={colors} />
-            
-//             <time
-//               className="block text-sm font-medium mt-4 mb-3 transition-colors duration-300"
-//               style={{
-//                 color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//               }}
-//             >
-//               {blog.date}
-//             </time>
-
-//             <h2
-//               className="text-3xl md:text-4xl font-black mb-4 transition-colors duration-300"
-//               style={{
-//                 color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//               }}
-//             >
-//               {blog.title}
-//             </h2>
-
-//             <p
-//               className="text-base md:text-lg mb-6 transition-colors duration-300"
-//               style={{
-//                 color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//               }}
-//             >
-//               {blog.excerpt}
-//             </p>
-
-//             <div className="flex items-center gap-2">
-//               <span
-//                 className="text-base font-bold transition-colors duration-300"
-//                 style={{
-//                   color: "#6366f1",
-//                 }}
-//               >
-//                 Read Full Article
-//               </span>
-//               <svg
-//                 className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2"
-//                 fill="none"
-//                 stroke="#6366f1"
-//                 viewBox="0 0 24 24"
-//               >
-//                 <path
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth={2}
-//                   d="M13 7l5 5m0 0l-5 5m5-5H6"
-//                 />
-//               </svg>
-//             </div>
-//           </div>
-//         </div>
-//       </article>
-//     </Link>
-//   );
-// });
-
-// FeaturedBlogCard.displayName = "FeaturedBlogCard";
-
-// // Filter Button Component
-// const FilterButton = memo(({ active, children, onClick, theme }) => (
-//   <button
-//     onClick={onClick}
-//     className="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
-//     style={{
-//       backgroundColor: active
-//         ? "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)"
-//         : theme === "dark"
-//         ? "rgba(255, 255, 255, 0.05)"
-//         : "rgba(0, 0, 0, 0.05)",
-//       background: active
-//         ? "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)"
-//         : undefined,
-//       color: active
-//         ? "#ffffff"
-//         : theme === "dark"
-//         ? "#ffffff"
-//         : "#000000",
-//       border: `1px solid ${
-//         active
-//           ? "transparent"
-//           : theme === "dark"
-//           ? "rgba(255, 255, 255, 0.1)"
-//           : "rgba(0, 0, 0, 0.1)"
-//       }`,
-//     }}
-//   >
-//     {children}
-//   </button>
-// ));
-
-// FilterButton.displayName = "FilterButton";
-
-// const Blog = () => {
-//   const { theme, colors } = useTheme();
-//   const [activeFilter, setActiveFilter] = useState("All");
-
-//   // Get unique categories
-//   const categories = useMemo(() => {
-//     const cats = ["All", ...new Set(blogData.map(blog => blog.category))];
-//     return cats;
-//   }, []);
-
-//   // Filter blogs
-//   const filteredBlogs = useMemo(() => {
-//     if (activeFilter === "All") return blogData;
-//     return blogData.filter(blog => blog.category === activeFilter);
-//   }, [activeFilter]);
-
-//   // Featured blog (first one)
-//   const featuredBlog = useMemo(() => blogData[0], []);
-//   const regularBlogs = useMemo(() => 
-//     activeFilter === "All" ? blogData.slice(1) : filteredBlogs,
-//     [activeFilter, filteredBlogs]
-//   );
-
-//   return (
-//     <section
-//       className="relative py-20 md:py-32 overflow-hidden transition-colors duration-500"
-//       style={{
-//         backgroundColor: theme === "dark" ? colors.darkColor : colors.creamLightColor,
-//       }}
-//     >
-//       {/* Background Orbs */}
-//       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//         <div
-//           className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse"
-//           style={{
-//             background: "radial-gradient(circle, #6366f1 0%, transparent 70%)",
-//             animationDuration: "8s",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse"
-//           style={{
-//             background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)",
-//             animationDuration: "10s",
-//             animationDelay: "2s",
-//           }}
-//         />
-//       </div>
-
-//       {/* Grid Pattern */}
-//       <div
-//         className="absolute inset-0 opacity-[0.02] pointer-events-none"
-//         style={{
-//           backgroundImage: `
-//             linear-gradient(${theme === "dark" ? colors.whiteColor : colors.blackColor} 1px, transparent 1px),
-//             linear-gradient(90deg, ${theme === "dark" ? colors.whiteColor : colors.blackColor} 1px, transparent 1px)
-//           `,
-//           backgroundSize: "64px 64px",
-//         }}
-//       />
-
-//       <div className="relative z-10 max-w-7xl mx-auto px-6">
-//         {/* Header */}
-//         <div className="text-center mb-16 animate-fade-in-down">
-//           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md border mb-6 transition-all duration-300 hover:scale-105"
-//             style={{
-//               backgroundColor: theme === "dark" 
-//                 ? "rgba(255, 255, 255, 0.08)" 
-//                 : "rgba(0, 0, 0, 0.06)",
-//               borderColor: theme === "dark"
-//                 ? "rgba(255, 255, 255, 0.15)"
-//                 : "rgba(0, 0, 0, 0.15)",
-//             }}
-//           >
-//             <span className="text-sm font-semibold tracking-wider" style={{ color: "#6366f1" }}>
-//               OUR INSIGHTS
-//             </span>
-//           </div>
-
-//           <h1
-//             className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 transition-colors duration-500"
-//             style={{
-//               color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//             }}
-//           >
-//             Latest <span style={{ color: "#6366f1" }}>Blog</span> Posts
-//           </h1>
-
-//           <p
-//             className="text-lg md:text-xl max-w-3xl mx-auto transition-colors duration-500"
-//             style={{
-//               color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//             }}
-//           >
-//             Stay updated with the latest trends, insights, and innovations in enterprise IT solutions
-//           </p>
-//         </div>
-
-//         {/* Filter Buttons */}
-//         <div className="flex flex-wrap justify-center gap-3 mb-12 animate-fade-in-up">
-//           {categories.map((category) => (
-//             <FilterButton
-//               key={category}
-//               active={activeFilter === category}
-//               onClick={() => setActiveFilter(category)}
-//               theme={theme}
-//             >
-//               {category}
-//             </FilterButton>
-//           ))}
-//         </div>
-
-//         {/* Featured Blog */}
-//         {activeFilter === "All" && (
-//           <div className="mb-16 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-//             <FeaturedBlogCard blog={featuredBlog} theme={theme} colors={colors} />
-//           </div>
-//         )}
-
-//         {/* Blog Grid */}
-//         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-//           {regularBlogs.map((blog, index) => (
-//             <BlogCard
-//               key={blog.id}
-//               blog={blog}
-//               theme={theme}
-//               colors={colors}
-//               index={index}
-//             />
-//           ))}
-//         </div>
-
-//         {/* No Results */}
-//         {filteredBlogs.length === 0 && (
-//           <div className="text-center py-20">
-//             <p
-//               className="text-xl font-medium"
-//               style={{
-//                 color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//               }}
-//             >
-//               No posts found in this category.
-//             </p>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* CSS Animations */}
-//       <style jsx>{`
-//         @keyframes fade-in-down {
-//           from {
-//             opacity: 0;
-//             transform: translateY(-20px);
-//           }
-//           to {
-//             opacity: 1;
-//             transform: translateY(0);
-//           }
-//         }
-
-//         @keyframes fade-in-up {
-//           from {
-//             opacity: 0;
-//             transform: translateY(20px);
-//           }
-//           to {
-//             opacity: 1;
-//             transform: translateY(0);
-//           }
-//         }
-
-//         .animate-fade-in-down {
-//           animation: fade-in-down 0.8s ease-out forwards;
-//         }
-
-//         .animate-fade-in-up {
-//           animation: fade-in-up 0.8s ease-out forwards;
-//         }
-
-//         .line-clamp-2 {
-//           display: -webkit-box;
-//           -webkit-line-clamp: 2;
-//           -webkit-box-orient: vertical;
-//           overflow: hidden;
-//         }
-
-//         .line-clamp-3 {
-//           display: -webkit-box;
-//           -webkit-line-clamp: 3;
-//           -webkit-box-orient: vertical;
-//           overflow: hidden;
-//         }
-
-//         @media (prefers-reduced-motion: reduce) {
-//           .animate-fade-in-down,
-//           .animate-fade-in-up {
-//             animation: none;
-//           }
-//         }
-//       `}</style>
-//     </section>
-//   );
-// };
-
-// export default memo(Blog);
-
-
-
 import { useTheme } from "../../context/ThemeContext";
 import { memo, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { blogData } from "./blogData";
+import { blogData } from "./Blogdata";
+import BlogCard, { CategoryPill } from "./BlogCard";
 
-/* -------------------- Category Badge -------------------- */
-const CategoryBadge = memo(({ category, theme }) => (
-  <span
-    className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 hover:scale-110"
-    style={{
-      backgroundColor:
-        theme === "dark"
-          ? "rgba(99,102,241,0.15)"
-          : "rgba(99,102,241,0.1)",
-      color: "#6366f1",
-      border: "1px solid rgba(99,102,241,0.3)",
-    }}
-  >
-    {category}
-  </span>
-));
+/* ── Filter Tab ──────────────────────────────────────────────── */
+const FilterTab = memo(({ active, onClick, theme, children }) => {
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={onClick}
+      className={`
+        relative px-5 py-2.5 rounded-xl text-sm font-semibold
+        transition-all duration-300 hover:scale-105 active:scale-95
+        ${active
+          ? "text-white shadow-lg shadow-indigo-500/25"
+          : isDark
+          ? "text-white/50 hover:text-white/80 bg-white/[0.04] hover:bg-white/[0.07]"
+          : "text-slate-500 hover:text-slate-800 bg-black/[0.04] hover:bg-black/[0.07]"
+        }
+      `}
+      style={
+        active
+          ? { background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }
+          : {}
+      }
+    >
+      {children}
+    </button>
+  );
+});
+FilterTab.displayName = "FilterTab";
 
-/* -------------------- Blog Card -------------------- */
-const BlogCard = memo(({ blog, theme, colors, index }) => {
+/* ── Featured Hero Card ─────────────────────────────────────── */
+const FeaturedHeroCard = memo(({ blog, theme }) => {
+  const isDark = theme === "dark";
   const [hovered, setHovered] = useState(false);
+
+  if (!blog) return null;
 
   return (
     <Link
-      to={`/blogs/${blog.id}`}   // ✅ FIXED ROUTE
-      className="group block h-full animate-fade-in-up"
-      style={{ animationDelay: `${index * 100}ms` }}
+      to={`/blogs/${blog.id}`}
+      className="block group"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <article
-        className="h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
+        className={`
+          relative rounded-3xl overflow-hidden transition-all duration-500
+          ${hovered ? "shadow-2xl" : "shadow-lg"}
+          ${isDark
+            ? "bg-white/[0.04] border border-white/[0.08] hover:border-indigo-500/30"
+            : "bg-white border border-black/[0.07] hover:border-indigo-300/60"
+          }
+        `}
         style={{
-          background:
-            theme === "dark"
-              ? "rgba(255,255,255,0.05)"
-              : "rgba(255,255,255,0.8)",
-          border:
-            theme === "dark"
-              ? "1px solid rgba(255,255,255,0.1)"
-              : "1px solid rgba(0,0,0,0.1)",
+          boxShadow: hovered
+            ? isDark
+              ? "0 32px 64px rgba(99,102,241,0.18), 0 8px 24px rgba(0,0,0,0.4)"
+              : "0 32px 64px rgba(99,102,241,0.14), 0 8px 24px rgba(0,0,0,0.1)"
+            : isDark
+            ? "0 4px 24px rgba(0,0,0,0.3)"
+            : "0 4px 24px rgba(0,0,0,0.07)",
         }}
       >
-        <div className="relative h-56 overflow-hidden">
-          <img
-            src={blog.image}
-            alt={blog.title}
-            className="w-full h-full object-cover transition-transform duration-700"
-            style={{ transform: hovered ? "scale(1.1)" : "scale(1)" }}
-          />
-          <div className="absolute top-4 left-4">
-            <CategoryBadge category={blog.category} theme={theme} />
+        <div className="grid lg:grid-cols-[1fr_1fr] min-h-[400px]">
+          {/* Image Side */}
+          <div className="relative overflow-hidden min-h-[260px] lg:min-h-[400px]">
+            <img
+              src={blog.image}
+              alt={blog.title}
+              className="w-full h-full object-cover transition-transform duration-700"
+              style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+
+            {/* Featured label */}
+            <div className="absolute top-6 left-6">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-600 text-white text-xs font-bold tracking-widest uppercase shadow-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                Featured
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className="p-6">
-          <time
-            className="block text-sm mb-2"
-            style={{
-              color:
-                theme === "dark"
-                  ? colors.grayColor2
-                  : colors.grayColor,
-            }}
-          >
-            {blog.date}
-          </time>
-
-          <h3
-            className="text-xl font-bold mb-3 line-clamp-2"
-            style={{
-              color:
-                theme === "dark"
-                  ? colors.whiteColor
-                  : colors.blackColor,
-            }}
-          >
-            {blog.title}
-          </h3>
-
-          <p
-            className="text-sm mb-4 line-clamp-3"
-            style={{
-              color:
-                theme === "dark"
-                  ? colors.grayColor2
-                  : colors.grayColor,
-            }}
-          >
-            {blog.excerpt}
-          </p>
-
-          <span className="text-sm font-semibold text-indigo-500">
-            Read More →
-          </span>
-        </div>
-      </article>
-    </Link>
-  );
-});
-
-/* -------------------- Featured Blog -------------------- */
-const FeaturedBlogCard = memo(({ blog, theme, colors }) => {
-  if (!blog) return null;
-
-  return (
-    <Link to={`/blogs/${blog.id}`} className="block"> {/* ✅ FIXED */}
-      <article
-        className="rounded-3xl overflow-hidden transition-all duration-500 hover:scale-[1.01]"
-        style={{
-          background:
-            theme === "dark"
-              ? "rgba(255,255,255,0.05)"
-              : "rgba(255,255,255,0.85)",
-          border:
-            theme === "dark"
-              ? "1px solid rgba(255,255,255,0.15)"
-              : "1px solid rgba(0,0,0,0.15)",
-        }}
-      >
-        <div className="grid md:grid-cols-2">
-          <img
-            src={blog.image}
-            alt={blog.title}
-            className="w-full h-72 md:h-full object-cover"
-          />
-
-          <div className="p-8 flex flex-col justify-center">
-            <CategoryBadge category={blog.category} theme={theme} />
+          {/* Content Side */}
+          <div className="flex flex-col justify-center p-8 lg:p-12">
+            <div className="flex items-center gap-3 mb-5">
+              <CategoryPill category={blog.category} />
+              <span className={`text-xs font-medium ${isDark ? "text-white/35" : "text-slate-400"}`}>
+                {blog.readTime}
+              </span>
+            </div>
 
             <h2
-              className="text-3xl font-black mt-4 mb-4"
-              style={{
-                color:
-                  theme === "dark"
-                    ? colors.whiteColor
-                    : colors.blackColor,
-              }}
+              className={`text-2xl lg:text-3xl xl:text-4xl font-black leading-tight mb-5 transition-colors duration-300
+                ${isDark ? "text-white group-hover:text-indigo-200" : "text-slate-900 group-hover:text-indigo-700"}
+              `}
             >
               {blog.title}
             </h2>
 
-            <p
-              className="mb-6"
-              style={{
-                color:
-                  theme === "dark"
-                    ? colors.grayColor2
-                    : colors.grayColor,
-              }}
-            >
+            <p className={`text-base leading-relaxed mb-8 ${isDark ? "text-white/55" : "text-slate-500"}`}>
               {blog.excerpt}
             </p>
 
-            <span className="font-bold text-indigo-500">
-              Read Full Article →
-            </span>
+            {/* Divider */}
+            <div className={`h-px mb-6 ${isDark ? "bg-white/[0.07]" : "bg-black/[0.06]"}`} />
+
+            {/* Author + CTA Row */}
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white text-sm font-bold">
+                  {blog.author.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                </span>
+                <div>
+                  <p className={`text-sm font-semibold ${isDark ? "text-white/85" : "text-slate-700"}`}>
+                    {blog.author}
+                  </p>
+                  <p className={`text-xs ${isDark ? "text-white/40" : "text-slate-400"}`}>
+                    {blog.date}
+                  </p>
+                </div>
+              </div>
+
+              <span
+                className={`
+                  inline-flex items-center gap-2 text-sm font-bold
+                  transition-all duration-300
+                  ${hovered ? "gap-3 text-indigo-400" : "text-indigo-500"}
+                `}
+              >
+                Read Full Article
+                <svg
+                  className={`w-4 h-4 transition-transform duration-300 ${hovered ? "translate-x-1.5" : ""}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </article>
     </Link>
   );
 });
+FeaturedHeroCard.displayName = "FeaturedHeroCard";
 
-/* -------------------- Filter Button -------------------- */
-const FilterButton = memo(({ active, onClick, theme, children }) => (
-  <button
-    onClick={onClick}
-    className="px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
-    style={{
-      background: active
-        ? "linear-gradient(135deg,#6366f1,#8b5cf6)"
-        : theme === "dark"
-        ? "rgba(255,255,255,0.05)"
-        : "rgba(0,0,0,0.05)",
-      color: active ? "#fff" : theme === "dark" ? "#fff" : "#000",
-      border: "1px solid rgba(255,255,255,0.1)",
-    }}
-  >
-    {children}
-  </button>
+/* ── Decorative Background ──────────────────────────────────── */
+const BackgroundDecor = memo(({ isDark }) => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    {/* Gradient orbs */}
+    <div
+      className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.06]"
+      style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)" }}
+    />
+    <div
+      className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.05]"
+      style={{ background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)" }}
+    />
+
+    {/* Subtle grid */}
+    <div
+      className="absolute inset-0 opacity-[0.025]"
+      style={{
+        backgroundImage: `
+          linear-gradient(${isDark ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)"} 1px, transparent 1px),
+          linear-gradient(90deg, ${isDark ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)"} 1px, transparent 1px)
+        `,
+        backgroundSize: "72px 72px",
+      }}
+    />
+
+    {/* Horizontal accent line */}
+    <div
+      className="absolute top-0 left-0 right-0 h-px"
+      style={{
+        background: isDark
+          ? "linear-gradient(to right, transparent, rgba(99,102,241,0.4), transparent)"
+          : "linear-gradient(to right, transparent, rgba(99,102,241,0.25), transparent)",
+      }}
+    />
+  </div>
 ));
+BackgroundDecor.displayName = "BackgroundDecor";
 
-/* -------------------- Blog Page -------------------- */
-const Blog = () => {
+/* ── Section Header ─────────────────────────────────────────── */
+const SectionHeader = memo(({ isDark }) => (
+  <div className="text-center mb-16 max-w-2xl mx-auto">
+    {/* Top Label */}
+    <div className="inline-flex items-center gap-2 mb-5">
+      <div className="h-px w-8 bg-indigo-500" />
+      <span className="text-indigo-500 text-xs font-bold tracking-[0.2em] uppercase">
+        Our Blog
+      </span>
+      <div className="h-px w-8 bg-indigo-500" />
+    </div>
+
+    {/* Main Heading */}
+    <h2
+      className={`text-4xl sm:text-5xl lg:text-[56px] font-black leading-[1.08] mb-5 tracking-tight
+        ${isDark ? "text-white" : "text-slate-900"}
+      `}
+    >
+      Insights &{" "}
+      <span
+        className="relative inline-block"
+        style={{
+          backgroundImage: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
+        Technology
+      </span>
+      <br />Trends
+    </h2>
+
+    {/* Description */}
+    <p className={`text-base lg:text-lg leading-relaxed ${isDark ? "text-white/50" : "text-slate-500"}`}>
+      Expert perspectives on enterprise IT, cloud transformation, AI adoption, and the future of
+      global technology outsourcing — curated by our team of industry specialists.
+    </p>
+  </div>
+));
+SectionHeader.displayName = "SectionHeader";
+
+/* ── Stats Bar ──────────────────────────────────────────────── */
+const StatsBar = memo(({ isDark }) => {
+  const stats = [
+    { value: "120+", label: "Articles Published" },
+    { value: "40K+", label: "Monthly Readers" },
+    { value: "18",   label: "Expert Contributors" },
+    { value: "6",    label: "Tech Domains" },
+  ];
+
+  return (
+    <div
+      className={`
+        flex flex-wrap justify-center gap-0 rounded-2xl overflow-hidden mb-16
+        ${isDark ? "border border-white/[0.06]" : "border border-black/[0.06]"}
+      `}
+    >
+      {stats.map((s, i) => (
+        <div
+          key={s.label}
+          className={`
+            flex-1 min-w-[120px] text-center py-5 px-6
+            ${i !== stats.length - 1
+              ? isDark
+                ? "border-r border-white/[0.06]"
+                : "border-r border-black/[0.06]"
+              : ""}
+            ${isDark ? "bg-white/[0.02]" : "bg-white/60"}
+          `}
+        >
+          <p
+            className="text-2xl font-black mb-1"
+            style={{
+              backgroundImage: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            {s.value}
+          </p>
+          <p className={`text-xs font-medium ${isDark ? "text-white/40" : "text-slate-500"}`}>
+            {s.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+});
+StatsBar.displayName = "StatsBar";
+
+/* ── Main Blog Section ──────────────────────────────────────── */
+const Blogs = () => {
   const { theme, colors } = useTheme();
   const [activeFilter, setActiveFilter] = useState("All");
+  const isDark = theme === "dark";
 
   const categories = useMemo(
     () => ["All", ...new Set(blogData.map((b) => b.category))],
@@ -700,71 +298,83 @@ const Blog = () => {
     [activeFilter]
   );
 
-  const regularBlogs = useMemo(() => {
+  const gridBlogs = useMemo(() => {
     if (activeFilter === "All") return blogData.slice(1);
     return blogData.filter((b) => b.category === activeFilter);
   }, [activeFilter]);
 
   return (
     <section
-      className="py-20"
+      className="relative py-24 lg:py-32 overflow-hidden transition-colors duration-500"
       style={{
-        background:
-          theme === "dark"
-            ? colors.darkColor
-            : colors.creamLightColor,
+        backgroundColor: isDark ? colors.darkColor : colors.creamLightColor,
       }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <h1
-          className="text-5xl font-black text-center mb-6 animate-fade-in-down"
-          style={{
-            color:
-              theme === "dark"
-                ? colors.whiteColor
-                : colors.blackColor,
-          }}
-        >
-          Latest <span className="text-indigo-500">Blogs</span>
-        </h1>
+      <BackgroundDecor isDark={isDark} />
 
-        <div className="flex justify-center flex-wrap gap-3 mb-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8">
+        {/* Header */}
+        <SectionHeader isDark={isDark} />
+
+        {/* Stats Bar */}
+        <StatsBar isDark={isDark} />
+
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((cat) => (
-            <FilterButton
+            <FilterTab
               key={cat}
               active={activeFilter === cat}
               theme={theme}
               onClick={() => setActiveFilter(cat)}
             >
               {cat}
-            </FilterButton>
+            </FilterTab>
           ))}
         </div>
 
+        {/* Featured Hero Post */}
         {featuredBlog && (
-          <div className="mb-16">
-            <FeaturedBlogCard
-              blog={featuredBlog}
-              theme={theme}
-              colors={colors}
-            />
+          <div className="mb-12">
+            <FeaturedHeroCard blog={featuredBlog} theme={theme} />
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {regularBlogs.map((blog, i) => (
-            <BlogCard
-              key={blog.id}
-              blog={blog}
-              theme={theme}
-              colors={colors}
-              index={i}
-            />
-          ))}
+        {/* Grid Posts */}
+        {gridBlogs.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+            {gridBlogs.map((blog, i) => (
+              <BlogCard key={blog.id} blog={blog} index={i} />
+            ))}
+          </div>
+        ) : (
+          <div className={`text-center py-20 ${isDark ? "text-white/30" : "text-slate-400"}`}>
+            <p className="text-lg font-medium">No articles found in this category.</p>
+          </div>
+        )}
+
+        {/* View All CTA */}
+        <div className="mt-16 text-center">
+          <Link
+            to="/blogs"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl text-sm font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/20 active:scale-95"
+            style={{
+              background: isDark
+                ? "linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15))"
+                : "linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08))",
+              border: "1px solid rgba(99,102,241,0.3)",
+              color: "#6366f1",
+            }}
+          >
+            Explore All Articles
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
   );
 };
 
-export default memo(Blog);
+export default memo(Blogs);

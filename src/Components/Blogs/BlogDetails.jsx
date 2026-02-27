@@ -1,470 +1,280 @@
-// import { useTheme } from "../../context/ThemeContext";
-// import { memo, useMemo, useEffect } from "react";
-// import { useParams, Link, useNavigate } from "react-router-dom";
-// import { blogData } from "./blogData";
-
-// // Category Badge Component
-// const CategoryBadge = memo(({ category, theme }) => (
-//   <span
-//     className="inline-block px-4 py-2 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-300"
-//     style={{
-//       backgroundColor: theme === "dark" 
-//         ? "rgba(99, 102, 241, 0.15)" 
-//         : "rgba(99, 102, 241, 0.1)",
-//       color: "#6366f1",
-//       border: "1px solid rgba(99, 102, 241, 0.3)",
-//     }}
-//   >
-//     {category}
-//   </span>
-// ));
-
-// CategoryBadge.displayName = "CategoryBadge";
-
-// // Back Button Component
-// const BackButton = memo(({ theme, colors }) => {
-//   const navigate = useNavigate();
-
-//   return (
-//     <button
-//       onClick={() => navigate("/blog")}
-//       className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 active:scale-95"
-//       style={{
-//         backgroundColor: theme === "dark"
-//           ? "rgba(255, 255, 255, 0.05)"
-//           : "rgba(0, 0, 0, 0.05)",
-//         border: `1px solid ${
-//           theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
-//         }`,
-//         color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//       }}
-//     >
-//       <svg
-//         className="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-1"
-//         fill="none"
-//         stroke="currentColor"
-//         viewBox="0 0 24 24"
-//       >
-//         <path
-//           strokeLinecap="round"
-//           strokeLinejoin="round"
-//           strokeWidth={2}
-//           d="M15 19l-7-7 7-7"
-//         />
-//       </svg>
-//       Back to Blog
-//     </button>
-//   );
-// });
-
-// BackButton.displayName = "BackButton";
-
-// // Related Blog Card
-// const RelatedBlogCard = memo(({ blog, theme, colors }) => (
-//   <Link
-//     to={`/blog/${blog.id}`}
-//     className="group block h-full"
-//     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-//   >
-//     <article
-//       className="h-full rounded-xl overflow-hidden backdrop-blur-md transition-all duration-300 hover:scale-105"
-//       style={{
-//         backgroundColor: theme === "dark"
-//           ? "rgba(255, 255, 255, 0.05)"
-//           : "rgba(255, 255, 255, 0.8)",
-//         border: `1px solid ${
-//           theme === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
-//         }`,
-//       }}
-//     >
-//       <div className="relative h-40 overflow-hidden">
-//         <img
-//           src={blog.image}
-//           alt={blog.title}
-//           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-//         />
-//       </div>
-//       <div className="p-4">
-//         <h4
-//           className="text-lg font-bold mb-2 line-clamp-2 transition-colors duration-300"
-//           style={{
-//             color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//           }}
-//         >
-//           {blog.title}
-//         </h4>
-//         <time
-//           className="text-sm transition-colors duration-300"
-//           style={{
-//             color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//           }}
-//         >
-//           {blog.date}
-//         </time>
-//       </div>
-//     </article>
-//   </Link>
-// ));
-
-// RelatedBlogCard.displayName = "RelatedBlogCard";
-
-// const BlogDetails = () => {
-//   const { theme, colors } = useTheme();
-//   const { id } = useParams();
-//   const navigate = useNavigate();
-
-//   // Find the blog post
-//   const blog = useMemo(() => {
-//     return blogData.find((b) => b.id === parseInt(id));
-//   }, [id]);
-
-//   // Get related posts (same category, exclude current)
-//   const relatedPosts = useMemo(() => {
-//     if (!blog) return [];
-//     return blogData
-//       .filter((b) => b.category === blog.category && b.id !== blog.id)
-//       .slice(0, 3);
-//   }, [blog]);
-
-//   // Scroll to top on mount
-//   useEffect(() => {
-//     window.scrollTo({ top: 0, behavior: 'smooth' });
-//   }, [id]);
-
-//   // If blog not found, redirect
-//   useEffect(() => {
-//     if (!blog) {
-//       navigate("/blog");
-//     }
-//   }, [blog, navigate]);
-
-//   if (!blog) return null;
-
-//   return (
-//     <article
-//       className="relative min-h-screen py-20 md:py-32 transition-colors duration-500"
-//       style={{
-//         backgroundColor: theme === "dark" ? colors.darkColor : colors.creamLightColor,
-//       }}
-//     >
-//       {/* Background Elements */}
-//       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//         <div
-//           className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-10"
-//           style={{
-//             background: "radial-gradient(circle, #6366f1 0%, transparent 70%)",
-//           }}
-//         />
-//       </div>
-
-//       <div
-//         className="absolute inset-0 opacity-[0.02] pointer-events-none"
-//         style={{
-//           backgroundImage: `
-//             linear-gradient(${theme === "dark" ? colors.whiteColor : colors.blackColor} 1px, transparent 1px),
-//             linear-gradient(90deg, ${theme === "dark" ? colors.whiteColor : colors.blackColor} 1px, transparent 1px)
-//           `,
-//           backgroundSize: "64px 64px",
-//         }}
-//       />
-
-//       <div className="relative z-10 max-w-4xl mx-auto px-6">
-//         {/* Back Button */}
-//         <div className="mb-8 animate-fade-in-down">
-//           <BackButton theme={theme} colors={colors} />
-//         </div>
-
-//         {/* Featured Image */}
-//         <div className="mb-8 rounded-3xl overflow-hidden animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-//           <div className="relative h-64 md:h-96 overflow-hidden">
-//             <img
-//               src={blog.image}
-//               alt={blog.title}
-//               className="w-full h-full object-cover"
-//             />
-//             <div
-//               className="absolute inset-0"
-//               style={{
-//                 background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%)",
-//               }}
-//             />
-//           </div>
-//         </div>
-
-//         {/* Article Header */}
-//         <header className="mb-12 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-//           <div className="flex flex-wrap items-center gap-4 mb-6">
-//             <CategoryBadge category={blog.category} theme={theme} />
-//             <time
-//               className="text-sm font-medium transition-colors duration-300"
-//               style={{
-//                 color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//               }}
-//             >
-//               {blog.date}
-//             </time>
-//           </div>
-
-//           <h1
-//             className="text-3xl sm:text-4xl md:text-5xl font-black mb-6 leading-tight transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//             }}
-//           >
-//             {blog.title}
-//           </h1>
-
-//           <p
-//             className="text-lg md:text-xl leading-relaxed transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//             }}
-//           >
-//             {blog.excerpt}
-//           </p>
-//         </header>
-
-//         {/* Article Content */}
-//         <div
-//           className="prose prose-lg max-w-none mb-16 animate-fade-in-up"
-//           style={{ animationDelay: "300ms" }}
-//         >
-//           <div
-//             className="leading-relaxed space-y-6 transition-colors duration-300"
-//             style={{
-//               color: theme === "dark" ? colors.grayColor2 : colors.grayColor,
-//             }}
-//           >
-//             {blog.content.split('\n\n').map((paragraph, index) => (
-//               <p key={index} className="text-base md:text-lg leading-relaxed">
-//                 {paragraph}
-//               </p>
-//             ))}
-//           </div>
-//         </div>
-
-//         {/* Divider */}
-//         <div
-//           className="h-px w-full mb-16"
-//           style={{
-//             background: theme === "dark"
-//               ? "linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)"
-//               : "linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent)",
-//           }}
-//         />
-
-//         {/* Related Posts */}
-//         {relatedPosts.length > 0 && (
-//           <section className="animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-//             <h2
-//               className="text-2xl md:text-3xl font-bold mb-8 transition-colors duration-300"
-//               style={{
-//                 color: theme === "dark" ? colors.whiteColor : colors.blackColor,
-//               }}
-//             >
-//               Related Articles
-//             </h2>
-
-//             <div className="grid md:grid-cols-3 gap-6">
-//               {relatedPosts.map((relatedBlog) => (
-//                 <RelatedBlogCard
-//                   key={relatedBlog.id}
-//                   blog={relatedBlog}
-//                   theme={theme}
-//                   colors={colors}
-//                 />
-//               ))}
-//             </div>
-//           </section>
-//         )}
-
-//         {/* Back to Top Button */}
-//         <div className="mt-16 text-center">
-//           <button
-//             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-//             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
-//             style={{
-//               background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-//               color: "#ffffff",
-//             }}
-//           >
-//             Back to Top
-//             <svg
-//               className="w-5 h-5"
-//               fill="none"
-//               stroke="currentColor"
-//               viewBox="0 0 24 24"
-//             >
-//               <path
-//                 strokeLinecap="round"
-//                 strokeLinejoin="round"
-//                 strokeWidth={2}
-//                 d="M5 10l7-7m0 0l7 7m-7-7v18"
-//               />
-//             </svg>
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* CSS Animations */}
-//       <style jsx>{`
-//         @keyframes fade-in-down {
-//           from {
-//             opacity: 0;
-//             transform: translateY(-20px);
-//           }
-//           to {
-//             opacity: 1;
-//             transform: translateY(0);
-//           }
-//         }
-
-//         @keyframes fade-in-up {
-//           from {
-//             opacity: 0;
-//             transform: translateY(20px);
-//           }
-//           to {
-//             opacity: 1;
-//             transform: translateY(0);
-//           }
-//         }
-
-//         .animate-fade-in-down {
-//           animation: fade-in-down 0.8s ease-out forwards;
-//         }
-
-//         .animate-fade-in-up {
-//           animation: fade-in-up 0.8s ease-out forwards;
-//         }
-
-//         .line-clamp-2 {
-//           display: -webkit-box;
-//           -webkit-line-clamp: 2;
-//           -webkit-box-orient: vertical;
-//           overflow: hidden;
-//         }
-
-//         @media (prefers-reduced-motion: reduce) {
-//           .animate-fade-in-down,
-//           .animate-fade-in-up {
-//             animation: none;
-//           }
-//         }
-//       `}</style>
-//     </article>
-//   );
-// };
-
-// export default memo(BlogDetails);
-
-
-
-
 import { useTheme } from "../../context/ThemeContext";
 import { memo, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { blogData } from "./blogData";
-
-const CategoryBadge = memo(({ category, theme }) => (
-  <span
-    className="px-4 py-2 rounded-full text-sm font-semibold uppercase"
-    style={{
-      background:
-        theme === "dark"
-          ? "rgba(99,102,241,0.15)"
-          : "rgba(99,102,241,0.1)",
-      color: "#6366f1",
-    }}
-  >
-    {category}
-  </span>
-));
+import BlogCard, { CategoryPill } from "./BlogCard";
 
 const BlogDetails = () => {
   const { theme, colors } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
+  const isDark = theme === "dark";
 
   const blog = useMemo(
     () => blogData.find((b) => b.id === Number(id)),
     [id]
   );
 
+  const relatedPosts = useMemo(() => {
+    if (!blog) return [];
+    return blogData
+      .filter((b) => b.category === blog.category && b.id !== blog.id)
+      .slice(0, 3);
+  }, [blog]);
+
   useEffect(() => {
     if (!blog) {
-      navigate("/blog", { replace: true });
+      navigate("/blogs", { replace: true });
       return;
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [blog, navigate]);
+  }, [blog, navigate, id]);
 
   if (!blog) return null;
 
   return (
     <article
-      className="py-20"
+      className="min-h-screen py-24 transition-colors duration-500"
       style={{
-        background:
-          theme === "dark"
-            ? colors.darkColor
-            : colors.creamLightColor,
+        backgroundColor: isDark ? colors.darkColor : colors.creamLightColor,
       }}
     >
-      <div className="max-w-4xl mx-auto px-6">
+      {/* Top accent line */}
+      <div
+        className="fixed top-0 left-0 right-0 h-0.5 z-50"
+        style={{
+          background: "linear-gradient(to right, #6366f1, #8b5cf6, #a78bfa)",
+        }}
+      />
+
+      <div className="max-w-3xl mx-auto px-5 sm:px-8">
+
+        {/* ── Back Button ── */}
         <button
-          onClick={() => navigate("/blog")}
-          className="mb-8 font-semibold text-indigo-500"
+          onClick={() => navigate("/blogs")}
+          className={`
+            group inline-flex items-center gap-2 mb-10 text-sm font-semibold
+            transition-all duration-300 hover:-translate-x-1
+            ${isDark ? "text-white/50 hover:text-white" : "text-slate-400 hover:text-slate-800"}
+          `}
         >
-          ← Back to Blog
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Blog
         </button>
 
-        <img
-          src={blog.image}
-          alt={blog.title}
-          className="w-full h-80 object-cover rounded-3xl mb-8"
-        />
+        {/* ── Hero Image ── */}
+        <div className="rounded-2xl overflow-hidden mb-10 shadow-xl">
+          <img
+            src={blog.image}
+            alt={blog.title}
+            className="w-full h-64 md:h-[420px] object-cover"
+          />
+        </div>
 
-        <CategoryBadge category={blog.category} theme={theme} />
-
-        <h1
-          className="text-4xl font-black mt-4 mb-6"
-          style={{
-            color:
-              theme === "dark"
-                ? colors.whiteColor
-                : colors.blackColor,
-          }}
-        >
-          {blog.title}
-        </h1>
-
+        {/* ── Big Bold Excerpt (top subtitle like screenshot) ── */}
         <p
-          className="mb-8"
+          className="text-xl sm:text-2xl md:text-3xl font-black leading-snug mb-8 tracking-tight"
           style={{
-            color:
-              theme === "dark"
-                ? colors.grayColor2
-                : colors.grayColor,
+            color: isDark ? colors.whiteColor : colors.blackColor,
           }}
         >
           {blog.excerpt}
         </p>
 
+        {/* ── Meta Row: Author · Date · Read Time ── */}
         <div
-          className="space-y-6"
-          style={{
-            color:
-              theme === "dark"
-                ? colors.grayColor2
-                : colors.grayColor,
-          }}
+          className={`flex flex-wrap items-center gap-5 mb-5 text-sm font-medium ${
+            isDark ? "text-white/45" : "text-slate-400"
+          }`}
         >
-          {blog.content.split("\n\n").map((p, i) => (
-            <p key={i}>{p}</p>
+          {/* Author */}
+          <span className="inline-flex items-center gap-1.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            {blog.author}
+          </span>
+
+          {/* Date */}
+          <span className="inline-flex items-center gap-1.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {blog.date}
+          </span>
+
+          {/* Read Time */}
+          <span className="inline-flex items-center gap-1.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {blog.readTime}
+          </span>
+        </div>
+
+        {/* ── Tags Row ── */}
+        <div className="flex flex-wrap items-center gap-2 mb-10">
+          <span className={`text-sm font-semibold mr-1 ${isDark ? "text-white/40" : "text-slate-400"}`}>
+            Tags:
+          </span>
+          <CategoryPill category={blog.category} />
+          {blog.tags && blog.tags.map((tag) => (
+            <span
+              key={tag}
+              className={`
+                px-3 py-1 rounded-full text-xs font-semibold border
+                ${isDark
+                  ? "bg-white/[0.05] border-white/[0.1] text-white/60"
+                  : "bg-black/[0.04] border-black/[0.08] text-slate-500"
+                }
+              `}
+            >
+              {tag}
+            </span>
           ))}
         </div>
+
+        {/* ── Divider ── */}
+        <div
+          className="h-px mb-10"
+          style={{
+            background: isDark
+              ? "linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent)"
+              : "linear-gradient(to right, transparent, rgba(0,0,0,0.08), transparent)",
+          }}
+        />
+
+        {/* ── Article Body (dangerouslySetInnerHTML) ── */}
+        <div
+          className="blog-content"
+          style={{
+            color: isDark ? colors.grayColor2 : colors.grayColor,
+          }}
+          dangerouslySetInnerHTML={{ __html: blog.content }}
+        />
+
+        {/* ── Divider ── */}
+        <div
+          className="h-px mt-16 mb-14"
+          style={{
+            background: isDark
+              ? "linear-gradient(to right, transparent, rgba(99,102,241,0.3), transparent)"
+              : "linear-gradient(to right, transparent, rgba(99,102,241,0.2), transparent)",
+          }}
+        />
+
+        {/* ── Related Posts ── */}
+        {relatedPosts.length > 0 && (
+          <section className="mb-16">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-px w-6 bg-indigo-500" />
+              <h2
+                className="text-2xl font-black"
+                style={{ color: isDark ? colors.whiteColor : colors.blackColor }}
+              >
+                Related Articles
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedPosts.map((b, i) => (
+                <BlogCard key={b.id} blog={b} index={i} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Back to Top ── */}
+        <div className="text-center pb-8">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl text-sm font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/25 active:scale-95"
+            style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            Back to Top
+          </button>
+        </div>
       </div>
+
+      {/* ── Blog Content Styles ── */}
+      <style>{`
+        .blog-content h1 {
+          font-size: 1.875rem;
+          font-weight: 900;
+          line-height: 1.25;
+          margin-top: 2.5rem;
+          margin-bottom: 0.75rem;
+          color: ${isDark ? colors.whiteColor : colors.blackColor};
+        }
+        .blog-content h2 {
+          font-size: 1.25rem;
+          font-weight: 700;
+          line-height: 1.4;
+          margin-top: 2rem;
+          margin-bottom: 0.5rem;
+          color: ${isDark ? colors.whiteColor : colors.blackColor};
+        }
+        .blog-content h3 {
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1.5;
+          margin-top: 1.5rem;
+          margin-bottom: 0.4rem;
+          color: ${isDark ? colors.whiteColor : colors.blackColor};
+        }
+        .blog-content p {
+          font-size: 1rem;
+          line-height: 1.85;
+          margin-bottom: 1.1rem;
+          color: ${isDark ? colors.grayColor2 : colors.grayColor};
+        }
+        .blog-content ul {
+          list-style: disc;
+          padding-left: 1.5rem;
+          margin-bottom: 1.1rem;
+        }
+        .blog-content ol {
+          list-style: decimal;
+          padding-left: 1.5rem;
+          margin-bottom: 1.1rem;
+        }
+        .blog-content li {
+          font-size: 1rem;
+          line-height: 1.75;
+          margin-bottom: 0.35rem;
+          color: ${isDark ? colors.grayColor2 : colors.grayColor};
+        }
+        .blog-content strong {
+          font-weight: 700;
+          color: ${isDark ? colors.whiteColor : colors.blackColor};
+        }
+        .blog-content a {
+          color: #6366f1;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+        .blog-content a:hover {
+          color: #8b5cf6;
+        }
+        .blog-content blockquote {
+          border-left: 3px solid #6366f1;
+          padding-left: 1rem;
+          margin: 1.5rem 0;
+          font-style: italic;
+          color: ${isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)"};
+        }
+        .blog-content h2:first-child,
+        .blog-content h3:first-child {
+          margin-top: 0;
+        }
+      `}</style>
     </article>
   );
 };
