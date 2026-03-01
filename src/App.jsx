@@ -22,6 +22,10 @@ import DataSolutions from "./pages/services/DataSolutions";
 import ITBusinessOutsourcing from "./pages/services/ITBusinessOutsourcing";
 import GraphicsAndDesign from "./pages/services/GraphicsDesign";
 
+// Career pages
+import Career from "./pages/Career/Career";
+import JobDetails from "./pages/Career/JobDetails";
+
 function App() {
   const contactRef = useRef(null);
 
@@ -36,14 +40,13 @@ function App() {
           element={
             <>
               <HomePage />
-              {/* Blog preview ONLY */}
               <Blogs />
               <Contact ref={contactRef} />
             </>
           }
         />
 
-        {/* Blog Pages */}
+        {/* Blog */}
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
 
@@ -57,6 +60,10 @@ function App() {
         <Route path="/services/data-solutions" element={<DataSolutions />} />
         <Route path="/services/outsourcing" element={<ITBusinessOutsourcing />} />
         <Route path="/services/graphics-design" element={<GraphicsAndDesign />} />
+
+        {/* Career */}
+        <Route path="/careers" element={<Career />} />
+        <Route path="/careers/:id" element={<JobDetails />} />
       </Routes>
 
       <Footer />

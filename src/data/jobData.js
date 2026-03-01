@@ -1,0 +1,167 @@
+export const jobsData = [
+  {
+    id: 1,
+    title: "Senior Full Stack Engineer",
+    department: "Engineering",
+    location: "Remote – Worldwide",
+    type: "Full-time",
+    description:
+      "Lead architecture and delivery of scalable enterprise web applications for global clients across finance, healthcare, and logistics sectors.",
+    responsibilities: [
+      "Design and implement robust, scalable backend services using Node.js and Python.",
+      "Build performant React-based frontends with accessibility and internationalisation in mind.",
+      "Collaborate with cross-functional teams across multiple time zones to define technical requirements.",
+      "Conduct thorough code reviews and mentor junior engineers.",
+      "Participate in on-call rotations and contribute to incident post-mortems.",
+      "Champion engineering best practices, CI/CD pipelines, and automated testing strategies.",
+    ],
+    requirements: [
+      "7+ years of professional software engineering experience.",
+      "Deep expertise in React, Node.js, and PostgreSQL or similar RDBMS.",
+      "Experience with cloud platforms (AWS, GCP, or Azure) and containerisation (Docker/Kubernetes).",
+      "Strong understanding of REST and GraphQL API design principles.",
+      "Excellent written and verbal communication skills in English.",
+      "Experience working in an Agile/Scrum delivery model.",
+    ],
+  },
+  {
+    id: 2,
+    title: "Cloud Infrastructure Architect",
+    department: "Infrastructure",
+    location: "Warsaw, Poland / Remote",
+    type: "Full-time",
+    description:
+      "Architect and govern enterprise-grade cloud environments for Fortune 500 clients, ensuring security, compliance, and cost optimisation at scale.",
+    responsibilities: [
+      "Design multi-region, highly available cloud infrastructure on AWS and Azure.",
+      "Define Infrastructure-as-Code standards using Terraform and Pulumi.",
+      "Lead cloud migration projects from on-premise to hybrid and fully cloud-native environments.",
+      "Establish security baselines aligned with ISO 27001 and SOC 2 requirements.",
+      "Produce architecture documentation and present solutions to C-level stakeholders.",
+      "Mentor cloud engineers and conduct internal technical workshops.",
+    ],
+    requirements: [
+      "10+ years in IT infrastructure with 5+ years in cloud architecture.",
+      "AWS Certified Solutions Architect – Professional or equivalent certification.",
+      "Hands-on expertise with Terraform, Ansible, and GitOps workflows.",
+      "Strong knowledge of network design, VPNs, and zero-trust security models.",
+      "Excellent stakeholder management and executive-level presentation skills.",
+    ],
+  },
+  {
+    id: 3,
+    title: "AI/ML Solutions Engineer",
+    department: "Data & AI",
+    location: "Remote – Europe",
+    type: "Full-time",
+    description:
+      "Build and deploy production-grade machine learning systems that deliver measurable business value to our enterprise client portfolio.",
+    responsibilities: [
+      "Develop end-to-end ML pipelines from data ingestion through to model serving.",
+      "Collaborate with data scientists to productionise research models using MLflow and Kubeflow.",
+      "Design feature stores, model registries, and monitoring frameworks.",
+      "Integrate LLM-based solutions into existing enterprise workflows.",
+      "Ensure models meet performance, fairness, and explainability requirements.",
+      "Present technical findings to client engineering and business stakeholders.",
+    ],
+    requirements: [
+      "5+ years in machine learning engineering or MLOps roles.",
+      "Proficiency in Python, PyTorch or TensorFlow, and scikit-learn.",
+      "Experience with cloud ML services (SageMaker, Vertex AI, or Azure ML).",
+      "Familiarity with LLM APIs and prompt engineering techniques.",
+      "Strong statistical fundamentals and experience with A/B testing frameworks.",
+    ],
+  },
+  {
+    id: 4,
+    title: "Enterprise Delivery Manager",
+    department: "Project Management",
+    location: "London, UK / Hybrid",
+    type: "Full-time",
+    description:
+      "Own end-to-end delivery of complex, multi-workstream IT outsourcing engagements ensuring client satisfaction and commercial success.",
+    responsibilities: [
+      "Manage project scope, budget, timeline, and risk across concurrent enterprise engagements.",
+      "Serve as the primary escalation point for client stakeholders up to CIO level.",
+      "Coordinate distributed engineering teams across multiple geographies.",
+      "Drive continuous improvement through retrospectives and delivery metrics.",
+      "Contribute to pre-sales activities including solutioning and proposal writing.",
+      "Ensure SLA compliance and report on delivery KPIs to internal leadership.",
+    ],
+    requirements: [
+      "8+ years in IT project or programme management within an outsourcing context.",
+      "PMP, PRINCE2, or equivalent certification required.",
+      "Proven track record managing engagements with TCV above $5M.",
+      "Experience with Agile, SAFe, and traditional waterfall delivery models.",
+      "Exceptional communication, negotiation, and relationship-building skills.",
+    ],
+  },
+  {
+    id: 5,
+    title: "Cybersecurity Consultant",
+    department: "Security",
+    location: "Remote – Global",
+    type: "Contract",
+    description:
+      "Provide expert cybersecurity advisory and hands-on implementation services to enterprise clients navigating complex regulatory landscapes.",
+    responsibilities: [
+      "Conduct comprehensive security assessments, penetration tests, and risk analyses.",
+      "Design and implement security architectures aligned with NIST, CIS, and ISO frameworks.",
+      "Lead incident response tabletop exercises and post-breach remediation engagements.",
+      "Advise clients on GDPR, HIPAA, and PCI-DSS compliance programmes.",
+      "Produce executive-level security reports and strategic roadmaps.",
+      "Support pre-sales security workshops and RFP responses.",
+    ],
+    requirements: [
+      "CISSP, CISM, or OSCP certification strongly preferred.",
+      "7+ years in cybersecurity consulting or equivalent advisory roles.",
+      "Hands-on experience with SIEM, EDR, and vulnerability management tooling.",
+      "Deep knowledge of cloud security controls on AWS, Azure, or GCP.",
+      "Ability to communicate complex security concepts to non-technical audiences.",
+    ],
+  },
+  {
+    id: 6,
+    title: "UX/UI Design Lead",
+    department: "Design",
+    location: "Remote – Americas",
+    type: "Full-time",
+    description:
+      "Drive the design vision for enterprise digital transformation projects, translating complex business requirements into elegant user-centred experiences.",
+    responsibilities: [
+      "Lead end-to-end UX design from discovery and research to high-fidelity prototypes.",
+      "Establish and maintain design systems aligned with client brand guidelines.",
+      "Facilitate stakeholder workshops, user interviews, and usability testing sessions.",
+      "Collaborate closely with engineering teams to ensure design fidelity in implementation.",
+      "Mentor junior designers and review design deliverables across the portfolio.",
+      "Champion accessibility standards (WCAG 2.1 AA) across all client projects.",
+    ],
+    requirements: [
+      "8+ years in UX/UI design with a strong enterprise or B2B portfolio.",
+      "Expert-level proficiency in Figma and experience with Storybook.",
+      "Proven experience designing complex, data-heavy enterprise applications.",
+      "Strong understanding of front-end development constraints (HTML, CSS, React).",
+      "Excellent facilitation skills with experience presenting to C-level stakeholders.",
+    ],
+  },
+];
+
+export const departments = [
+  "All Departments",
+  "Engineering",
+  "Infrastructure",
+  "Data & AI",
+  "Project Management",
+  "Security",
+  "Design",
+];
+
+export const locations = [
+  "All Locations",
+  "Remote – Worldwide",
+  "Remote – Europe",
+  "Remote – Americas",
+  "Remote – Global",
+  "Warsaw, Poland / Remote",
+  "London, UK / Hybrid",
+];
